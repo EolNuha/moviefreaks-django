@@ -1,0 +1,369 @@
+{% extends "main/base.html" %}
+{% block title %}Movie Freaks | Watching - {{watch}}{% endblock %}
+{% block content %}
+{% load static %}
+<style>
+    footer{display: none;}
+</style>
+<link rel="stylesheet" href="{% static 'main/styles/css/controls.css' %}"/>
+<body style="background-color: black;">
+    <div class="container-fluid"
+        style="position: fixed; margin: 10px 0px 0px 0px; display: block; cursor: pointer; z-index: 99;">
+        {% with messages=get_flashed_messages %}
+        {% for msg in messages %}
+        <div class="alert" style="position: absolute; color: white;">
+            <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+            <strong style="color: white;">{{msg}}</strong>
+        </div>
+        {% endfor %}
+        {% endwith %}
+    </div>
+
+    <div style="text-align: center; height: 160px;">
+        <img src="{% static 'main/images/logopreloaderwhite.png' %}" class="errorimage">
+        <h2 style="color: #f1f1f1;">
+            Oops! That movie/tv show couldn't be found.<br> Check your spelling!</h2>
+
+        <a href="/"><button class="dropbtn-modal">Home</button></a>
+    </div>
+    <div style="background-color: black; position: relative; margin-top: -160px;">
+        <div class="container" style="padding: 15px;">
+            <!-- checks to see if the name of the movie or tv show matches the ones in the database -->
+            <div style="text-align: center;">
+                {% for item in values1 %}
+                {% with item.seasons|slugify as image_path and item.episodes|slugify as image_path1 %}
+                {% with item.name|add:' season '|add:image_path|add:' episode '|add:image_path1 as variable3 %}
+                {% if variable3 == watch %}
+                <h1 style="color: white;">{{watch}}</h1>
+                {% endif %}
+                {% endwith %}
+                {% endwith %}
+                {% endfor %}
+
+
+                {% for item in values %}
+                {% if item.name == watch %}
+                <h1 style="color: white;">{{watch}}</h1>
+                {% endif %}
+                {% endfor %}
+
+            </div>
+            <!-- Endcomment -->
+
+
+        </div>
+        {% for item in values %}
+        {% if item.name == watch %}
+        <div class="container" style="text-align: center; margin-top: 10px; margin-bottom: 25px;">
+            <video controls
+            crossorigin
+            playsinline
+            data-poster="{{item.bigimgurl}}"
+            id="player" preload="auto">
+                <source src="{{item.vidurl}}" type="video/mp4">
+                <source src="{{item.vidurl}}" type="video/mkv">
+                    <track label="English" kind="subtitles" srclang="en" src="{{item.suburl}}" default>
+                Your browser does not support HTML video.
+            </video>
+        </div>
+        <script>
+            var vid = document.getElementById("player");
+
+            function setCurTime() {
+                vid.currentTime = 0;
+            }
+            setCurTime()
+        </script>
+        {% endif %}
+        {% endfor %}
+
+        {% for item in values1 %}
+        {% with item.seasons|slugify as image_path and item.episodes|slugify as image_path1 %}
+        {% with item.name|add:' season '|add:image_path|add:' episode '|add:image_path1 as variable3 %}
+        {% if variable3 == watch %}
+        <div class="container" style="text-align: center; margin-top: 10px; margin-bottom: 25px;">
+            <video controls
+            crossorigin
+            playsinline
+            data-poster="{{item.imgurl}}"
+            id="player" preload="auto">
+                <source src="{{item.vidurl}}" type="video/mkv">
+                <source src="{{item.vidurl}}" type="video/mp4">
+                <track label="English" kind="subtitles" srclang="en" src="{{item.suburl}}"
+                    default>
+                Your browser does not support HTML video.
+                
+            </video>
+        </div>
+        <script>
+            var vid = document.getElementById("player");
+
+            function setCurTime() {
+                vid.currentTime = 0;
+            }
+            setCurTime()
+        </script>
+        {% endif %}
+        {% endwith %}
+        {% endwith %}
+        {% endfor %}
+
+        <div class="container">
+            {% for item in values %}
+            {% if item.name == watch %}
+            {% if item.rate < "1" %}
+            <i class="fa fa-star-half-full"></i><i class="fa fa-star-o"></i><i class="fa fa-star-o"></i><i
+                class="fa fa-star-o"></i><i class="fa fa-star-o"></i>
+            {% endif %}
+            {% if item.rate <= "2" %}
+            {% if item.rate > "1" %}
+            <i class="fa fa-star"></i><i class="fa fa-star-o"></i><i class="fa fa-star-o"></i><i
+                class="fa fa-star-o"></i><i class="fa fa-star-o"></i>
+            {% endif %}
+            {% endif %}
+            {% if item.rate <= "3" %}
+            {% if item.rate > "2" %}
+            <i class="fa fa-star"></i><i class="fa fa-star-half-full"></i><i class="fa fa-star-o"></i><i
+                class="fa fa-star-o"></i><i class="fa fa-star-o"></i>
+            {% endif %}
+            {% endif %}
+            {% if item.rate <= "4" %}
+            {% if item.rate > "3" %}
+            <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star-o"></i><i
+                class="fa fa-star-o"></i><i class="fa fa-star-o"></i>
+            {% endif %}
+            {% endif %}
+            {% if item.rate <= "5" %}
+            {% if item.rate > "4" %}
+            <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star-half-full"></i><i
+                class="fa fa-star-o"></i><i class="fa fa-star-o"></i>
+            {% endif %}
+            {% endif %}
+            {% if item.rate <= "6" %}
+            {% if item.rate > "5" %}
+            <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star-o"></i><i
+                class="fa fa-star-o"></i>
+            {% endif %}
+            {% endif %}
+            {% if item.rate <= "7" %}
+            {% if item.rate > "6" %}
+            <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i
+                class="fa fa-star-half-full"></i><i class="fa fa-star-o"></i>
+            {% endif %}
+            {% endif %}
+            {% if item.rate <= "8" %}
+            {% if item.rate > "7" %}
+            <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i
+                class="fa fa-star-o"></i>
+            {% endif %}
+            {% endif %}
+            {% if item.rate <= "9" %}
+            {% if item.rate > "8" %}
+            <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i
+                class="fa fa-star-half-full"></i>
+            {% endif %}
+            {% endif %}
+            {% if item.rate > "9" %}
+            <i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i class="fa fa-star"></i><i
+                class="fa fa-star"></i>
+            {% endif %}
+
+            <button onclick="document.getElementById('id03').style.display='block'"
+                class="dropbtn-modal play-modal-right">Watch
+                trailer <i class="fa fa-youtube-play"></i>
+            </button>
+
+            <div id="id03" class="modal" onclick="document.getElementById('id03').style.display='none'"
+                style="overflow-y: scroll;">
+
+                <div class="modal-content1 animate">
+                    <div class="imgcontainer">
+                        <span onclick="document.getElementById('id03').style.display='none'" class="close"
+                            title="Close">&times;</span>
+                    </div>
+
+
+                    <div class="container-fluid" style="text-align: center; margin-top: 20px; margin-bottom: 70px;">
+                        <iframe width="100%" height="600" src="{{item.trailer}}" frameborder="0"
+                            allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                            allowfullscreen></iframe>
+
+                    </div>
+                </div>
+            </div>
+            {% endif %}
+            {% endfor %}
+        </div>
+
+
+
+
+        <script>
+            // Get the modal
+            var modal = document.getElementById('id03');
+
+            // When the user clicks anywhere outside of the modal, close it
+            window.onclick = function (event) {
+                if (event.target == modal) {
+                    modal.style.display = "none";
+                }
+            }
+
+
+        </script>
+
+
+
+
+
+
+        <div class="container" style="margin-bottom: 50px;">
+            <!-- if the name matches the ones in database then it will display the buttons for next and previous episodes -->
+            <!-- Media screen max-width: 800px -->
+            <div class="episodetextaligncenter">
+                <!-- Checks to see if the current episode is bigger than 1 so that it can display the previous episode button -->
+                {% for item in values1 %}
+                {% with item.seasons|slugify as image_path and item.episodes|slugify as image_path1 %}
+                {% with item.name|add:' season '|add:image_path|add:' episode '|add:image_path1 as variable3 %}
+                {% if variable3 == watch %}
+
+                {% if item.episodes > 1 %}
+                {% with item.seasons|slugify as image_path and item.episodes|add:"-1"|slugify as image_path1 %}
+                {% with item.name|add:" season "|add:image_path|add:" episode "|add:image_path1 as variable4 %}
+                <a href="/watching/{{variable4}}">
+                    <button class="box"><span class="glyphicon glyphicon-arrow-left"></span> Previous episode</button>
+                </a>
+                {% endwith %}
+                {% endwith %}
+                {% endif %}
+                <!-- Endcomment -->
+                <!-- The previous season button -->
+                {% if item.episodes == 1 %}
+                {% if presentseason > 1 %}
+                {% with previousseason=presentseason|add:"-1" %}
+                {% with previousseason|slugify as image_path and presentseason1|slugify as image_path1 %}
+                {% with item.name|add:" season "|add:image_path|add:" episode "|add:image_path1 as variable6 %}
+                <a href="/watching/{{variable6}}" class="nextepisodeleft">
+                    <button class="box"><span class="glyphicon glyphicon-arrow-left"></span> Previous season</button>
+                </a>
+                {% endwith %}
+                {% endwith %}
+                {% endwith %}
+                {% endif %}
+                {% endif %}
+                <!-- endcomment -->
+                {% endif %}
+                {% endwith %}
+                {% endwith %}
+                {% endfor %}
+
+                {% for item in values1 %}
+                {% with item.seasons|slugify as image_path and item.episodes|slugify as image_path1 %}
+                {% with item.name|add:' season '|add:image_path|add:' episode '|add:image_path1 as variable3 %}
+                {% if variable3 == watch %}
+                <!-- If the episode is smaller than the last one that is in the database, the next episode button will be diplayed -->
+                {% if item.episodes < stopsnextepisode %}
+                {% if item.episodes > 1 %}
+                {% with item.seasons|slugify as image_path and item.episodes|add:"1"|slugify as image_path1 %}
+                {% with item.name|add:" season "|add:image_path|add:" episode "|add:image_path1 as variable5 %}
+                <a href="/watching/{{variable5}}" class="nextepisoderight">
+                    <button class="box">Next episode <span class="glyphicon glyphicon-arrow-right"></span></button>
+                </a>
+                {% endwith %}
+                {% endwith %}
+                {% endif %}
+                {% if item.episodes == 1 %}
+                {% with item.seasons|slugify as image_path and item.episodes|add:"1"|slugify as image_path1 %}
+                {% with item.name|add:" season "|add:image_path|add:" episode "|add:image_path1 as variable5 %}
+                <div style="padding-bottom: 40px;">
+                    <a href="/watching/{{variable5}}" class="nextepisoderight">
+                        <button class="box">Next episode <span class="glyphicon glyphicon-arrow-right"></span></button>
+                    </a>
+                </div>
+                {% endwith %}
+                {% endwith %}
+
+                {% endif %}
+                {% endif %}
+                <!-- Endcomment -->
+                <!-- when the last episode of that season is being played than the next season button will be displayed -->
+                {% if item.episodes == stopsnextepisode %}
+                {% with presentseason1=presentseason|add:"1" %}
+                {% if presentseason < stopsnextseason %}
+                {% with presentseason1|slugify as image_path %}
+                {% with variable10=item.name|add:" season "|add:image_path|add:" episode 1" %}
+                <a href="/watching/{{variable10}}" class="nextepisoderight">
+                    <button class="box">Next season <span class="glyphicon glyphicon-arrow-right"></span></button>
+                </a>
+                {% endwith %}
+                {% endwith %}
+                {% endif %}
+                {% endwith %}
+                {% endif %}
+                <!-- Endcomment -->
+                {% endif %}
+                {% endwith %}
+                {% endwith %}
+                {% endfor %}
+            </div>
+            <!-- Endcomment -->
+
+
+            <!-- Checks to see if the name matches the ones in the database then it will display the description of that movie or tvshow -->
+            <div style="margin: 42px 25px 45px;">
+                {% for item in values1 %}
+                {% with item.seasons|slugify as image_path and item.episodes|slugify as image_path1 %}
+                {% with item.name|add:' season '|add:image_path|add:' episode '|add:image_path1 as variable3 %}
+                {% if variable3 == watch %}
+                <hr style="background-color: lightgray; height: 0.7px;">
+                <div class="container-fluid movie-description">
+                    <h3>{{item.title}}</h3>
+                    <p style="color: grey;">{{item.description}}</p>
+
+                </div>
+                <hr style="background-color: lightgray; height: 0.7px;">
+                {% endif %}
+                {% endwith %}
+                {% endwith %}
+                {% endfor %}
+            </div>
+
+
+            {% for item in values %}
+            {% if item.name == watch %}
+            <hr style="background-color: lightgray; height: 0.7px;">
+            <div class="container-fluid movie-description">
+                <p style="color: #f1f1f1;">{{item.description}}</p>
+
+            </div>
+            <hr style="background-color: lightgray; height: 0.7px;">
+
+            {% if item.collection != "None" %}
+            <h5 class="container-fluid" style="margin-top: 50px;"><b>{{item.collection}}</b> collection:</h5>
+            <div class="row" style="margin-bottom: 25px;">
+
+                {% for obj in values %}
+                {% if obj.collection == item.collection %}
+                {% if obj.collection != "None" %}
+                {% if obj.name != item.name %}
+                <div class="column-collection">
+                    <div class="zoom">
+                        <a href="/watching/{{obj.name}}"><img src="{{obj.imgurl}}" alt="Snow"
+                                style="max-width:100%; border-radius: 6px;"></a>
+                    </div>
+                    <p style="color: white; margin: 0px; padding: 0px;">{{obj.name}}</p>
+                </div>
+                {% endif %}
+                {% endif %}
+                {% endif %}
+                {% endfor %}
+            </div>
+            {% endif %}
+            {% endif %}
+            {% endfor %}
+            <!-- Endcomment -->
+        </div>
+    </div>
+    <script src="{% static 'main/styles/js/controls.js' %}" crossorigin="anonymous"></script>
+</body>
+{% endblock %}

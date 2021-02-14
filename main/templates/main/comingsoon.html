@@ -1,0 +1,76 @@
+{% extends "main/base.html" %}
+{% block title %}Movie Freaks | Coming Soon{% endblock %}
+{% block content %}
+<style>
+    footer{display: none;}
+    .column-comingsoon {padding-top: 20px;}
+@media screen and (min-width: 1000px) {
+    .column-comingsoon {float: left;width: 16.66%;padding-bottom: 15px;padding-right: 2px;padding-left: 2px;}
+    }
+@media screen and (max-width: 1000px) {
+    .column-comingsoon {float: left;width: 20%;padding-bottom: 15px;padding-right: 2px;padding-left: 2px;}
+    }
+@media screen and (max-width: 800px) {
+    .column-comingsoon {float: left;width: 25%;padding-bottom: 15px;padding-right: 2px;padding-left: 2px;}
+    }
+@media screen and (max-width: 500px) {
+    .column-comingsoon {float: left;width: 50%;padding-bottom: 15px;padding-right: 2px;padding-left: 2px;}
+    }
+    
+</style>
+<body style="background-color: black;">
+    <div class="container-fluid"
+        style="position: fixed; margin: 10px 0px 0px 0px; display: block; cursor: pointer; z-index: 99;">
+        {% with messages=get_flashed_messages %}
+        {% for msg in messages %}
+        <div class="alert" style="position: absolute; color: white;">
+            <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+            <strong style="color: white;">{{msg}}</strong>
+        </div>
+        {% endfor %}
+        {% endwith %}
+    </div>
+
+    <div class="container-fluid">
+            <div style="margin-bottom: 70px;">
+                {% if moviesoonlist %}
+                <h1 style="color: #fff; background-color: black; position: relative; text-align: center;">Movies Coming Soon</h1>
+                <div class="row" style="margin-left: 3px; margin-right: 3px;">
+                    
+                    {% for item in moviesoonlist %}
+                    <div class="column-comingsoon">
+                        <div class="zoom" title="Click for {{item.name}}'s info" style="cursor: pointer;">
+                            <a><img
+                                        src="{{item.imgurl}}" alt="{{item.name}}"
+                                        style="max-width:100%"></a>
+                        </div>
+                        <p style="color: white; margin: 0px; padding: 0px;">{{item.name}} ({{item.year}})</p>
+                    </div>
+                    {% endfor %}
+
+                    
+                </div>
+                {% endif %}
+                {% if tvseriesoonlist %}
+                <h1 style="color: #fff; background-color: black; position: relative; text-align: center;">TV Shows Coming Soon</h1>
+                <div class="row" style="margin-left: 3px; margin-right: 3px;">
+                    
+                    {% for item in tvseriesoonlist %}
+                    <div class="column-comingsoon">
+                        <div class="zoom" title="Click for {{item.name}}'s info" style="cursor: pointer;">
+                            <a><img
+                                        src="{{item.imgurl}}" alt="{{item.name}}"
+                                        style="max-width:100%"></a>
+                        </div>
+                        <p style="color: white; margin: 0px; padding: 0px;">{{item.name}} ({{item.year}})</p>
+                    </div>
+                    {% endfor %}
+
+                    
+                </div>
+                {% endif %}
+            </div>
+    </div>
+
+</body>
+{% endblock %}

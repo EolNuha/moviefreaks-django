@@ -1,0 +1,410 @@
+html {scroll-behavior: smooth;}
+
+/* Scrollbar style */
+::-webkit-scrollbar {width: 0px;}
+::-webkit-scrollbar-track {background: #f1f1f1;}
+::-webkit-scrollbar-thumb {background: #888;}
+::-webkit-scrollbar-thumb:hover {background: #555;}
+
+.topnav {z-index: 1;}
+
+a {color: red;}
+a:hover {color: white; text-decoration: none; transition-duration: 0.45s;}
+
+body {margin: 0;font-family: Arial, Helvetica, sans-serif;font-size: 16px;}
+
+
+/*------------------------------------------------------------------------------------------------------------------------------------*/
+/* style for TOP button */
+#myBtn {display: none;position: fixed;bottom: 30px;right: 30px;z-index: 99;font-size: 18px;border: none;outline: none;
+    background-color: red;color: white;cursor: pointer;padding: 0px;border-radius: 4px;width: 50px;height: 50px;}
+#myBtn:hover {color: #000;}
+
+
+/*------------------------------------------------------------------------------------------------------------------------------------*/
+/* Style for the suggestion box */
+.borderbox {box-shadow: 0 1px rgba(0, 0, 0, 0.3),0 3px 7px rgba(0, 0, 0, 0.3),inset 0 1px rgba(255, 255, 255, 1),inset 0 -3px 2px rgba(0, 0, 0, 0.25);
+    border-radius: 5px;background: linear-gradient(#eeefef, #ffffff 10%);padding: 5px;}
+.show {display: inline-block;}
+::placeholder {color: red;}
+.textareastyle {margin-bottom: 20px;display: block;margin-left: auto;margin-right: auto;width: 80%;height: 150px;border: black;color: #d62217;
+            box-shadow: 0 0 1px rgba(0, 0, 0, 0.3),0 3px 7px rgba(0, 0, 0, 0.3),inset 0 1px rgba(255, 255, 255, 1),inset 0 -3px 2px rgba(0, 0, 0, 0.25);
+            border-radius: 5px;background: linear-gradient(#eeefef, #ffffff 10%);}
+/* Set a style for all buttons */
+.button1 {background-color: #901313;color: white;padding: 14px 18px;margin: 0px;border: none;cursor: pointer;width: 100%}
+.button1:hover {background-color: black;}
+/* Extra styles for the cancel button */
+.cancelbtn {width: auto;padding: 10px 18px;background-color: #901313;}
+.container {padding: 16px;}
+span.psw {float: right;padding-top: 16px;}
+/* The Close Button (x) */
+.close {position: absolute;right: 25px;top: 0;color: lightgray;font-size: 35px;font-weight: bold;opacity: 0.7;}
+.close:hover,.close:focus {color: red;cursor: pointer;}
+/* Change styles for span and cancel button on extra small screens */
+@media screen and (max-width: 300px) {
+    span.psw {display: block;float: none;}
+    .cancelbtn {width: 100%;}}
+
+
+
+
+/*------------------------------------------------------------------------------------------------------------------------------------*/
+/* zoom styles */
+.row {margin-left: 10px;margin-right: 10px;}
+.zoom {transition: transform .2s;/* Animation */}
+.zoom:hover {transform: scale(1.05);/* (150% zoom - Note: if the zoom is too large, it will go outside of the viewport) */}
+
+
+
+/*------------------------------------------------------------------------------------------------------------------------------------*/
+/* Flash Messages styling */
+.alert {padding: 5px;background-color: #383636;color: white;height: auto;text-align: center;display: block;margin-left: auto;margin-right: auto;width: 98%;}
+.closebtn {padding: 5px;margin-left: 15px;color: white;font-weight: bold;float: right;font-size: 22px;line-height: 20px;cursor: pointer;transition: 0.3s;}
+.closebtn:hover {color: grey;}
+
+
+/*------------------------------------------------------------------------------------------------------------------------------------*/
+/* Slider images styles */
+html,
+body {position: relative;height: 100%;}
+.swiper-wrapper {margin: 0px;padding-top: 0px;}
+h3 {margin-bottom: 0px;}
+body {background: #eee;font-family: Helvetica Neue, Helvetica, Arial, sans-serif;font-size: 14px;background-color: #000;color: white;margin: 0;padding: 0;}
+.swiper-container {width: 100%;height: 100%;}
+.swiper-container-responsive {width: 100%;height: 100%;}
+.swiper-slide {text-align: center;font-size: 18px;background: #000;
+    /* Center slide text vertically */
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: -webkit-flex;
+    display: flex;
+    -webkit-box-pack: center;
+    -ms-flex-pack: center;
+    -webkit-justify-content: center;
+    justify-content: center;
+    -webkit-box-align: center;
+    -ms-flex-align: center;
+    -webkit-align-items: center;
+    align-items: center;
+}
+/* Changes the color of swiper button next and previous  */
+:root {--swiper-theme-color: #fff;}
+
+.netflix img {max-width: 100%;height: auto;}
+.netflix .swiper-slide {-webkit-transition: 250ms all;transition: 250ms all;}
+.netflix .swiper-slide:hover {-webkit-transform: scale(1.1);transform: scale(1.1);z-index: 100;}
+.swiper-slide {background-color: #000;}
+.netflix .swiper-wrapper {padding: 20px 0px;}
+.netflix .swiper-slide:first-child:hover {margin: 0px 20px;}
+.netflix .swiper-slide:last-child:hover {margin: 0px -20px;}
+.swiper-container-auto img {width: 100%;}
+.container-image {position: relative;width: 50%;}
+.image {opacity: 1;display: block;width: 100%;height: auto;transition: .5s ease;backface-visibility: hidden;}
+.middle {transition: .5s ease;opacity: 0;position: absolute;top: 90%;left: 50%;width: 100%;transform: translate(-50%, -50%);-ms-transform: translate(-50%, -50%);cursor: pointer;}
+.container-image:hover .image {opacity: 0.5;}
+.container-image:hover .middle {opacity: 1;}
+.text {background-color: transparent;background-image: linear-gradient(transparent, black, black, black);color: white;font-size: 13px;padding: 16px 32px;opacity: 0.9;}
+.text1 {background-color: transparent;background-image: linear-gradient(transparent, black, black, black);color: white;font-size: 12px;padding: 5px 10px;opacity: 0.9;}
+.text2 {background-color: transparent;background-image: linear-gradient(transparent, black, black, black);color: white;font-size: 16px;padding: 16px 32px;opacity: 0.8;}
+.text3 {background-color: transparent;background-image: linear-gradient(transparent, black, black, black);color: white;font-size: 12px;padding: 5px 10px;opacity: 0.8;}
+.container-image-episodes .image {opacity: 0.7;}
+.container-image-episodes .middle {opacity: 1;}
+.container-image-episodes:hover .image {opacity: 0.3;}
+.glyphicon {padding: 0px;margin: 0px;}
+span {padding: 0px;margin: 0px;}
+.imagewidth {width: 1000px;}
+
+
+
+
+
+/*------------------------------------------------------------------------------------------------------------------------------------*/
+/* "/watching"  trailer modal iframe styles */
+.modal-content1 {
+    background-color: transparent;
+    margin: 5% auto 15% auto;
+    /* 5% from the top, 15% from the bottom and centered */
+    border: none;
+    width: 80%;
+    /* Could be more or less, depending on screen size */
+}
+
+
+
+/*------------------------------------------------------------------------------------------------------------------------------------*/
+/* Rate star styles */
+.fa-star {float: left;color: red;font-size: 20px;}
+.fa-star-o {float: left;color: red;font-size: 20px;}
+.fa-star-half-full {float: left;color: red;font-size: 20px;}
+/* modal rate stars display: none when screen > 800  and display: block when screen < 800 */
+.modal-stars {display: none;}
+@media screen and (max-width: 800px) {.modal-stars {display: block;}}
+
+
+
+/* Add Zoom Animation */
+.animate {-webkit-animation: animatezoom 0.6s;animation: animatezoom 0.6s}
+@-webkit-keyframes animatezoom {from {-webkit-transform: scale(0)}to {-webkit-transform: scale(1)}}
+@keyframes animatezoom {from {transform: scale(0)}to {transform: scale(1)}}
+
+
+/*------------------------------------------------------------------------------------------------------------------------------------*/
+/* Modal hover image to show play button */
+@media screen and (max-width: 800px) {.close-button-responsive {margin-right: 25px;}}
+@media screen and (min-width: 800px) {
+    * {box-sizing: border-box;}
+    .column-movies {float: left;width: 70%;padding: 5px;}
+    .column-movies1 {float: left;width: 30%;padding: 5px;}
+    /* Clearfix (clear floats) */
+    .row-movies::after {content: "";clear: both;display: table;}
+    .close-button-responsive {margin-right: 50px;}
+}
+.image-movies {opacity: 1;display: block;width: 100%;height: auto;transition: .5s ease;backface-visibility: hidden;}
+.middle-movies {transition: .5s ease;opacity: 0;position: absolute;top: 50%;left: 50%;transform: translate(-50%, -50%);-ms-transform: translate(-50%, -50%);text-align: center;}
+.container-movies:hover .image-movies {opacity: 0.5;}
+.container-movies:hover .middle-movies {opacity: 1;}
+.container-movies {position: relative;}
+
+
+/*------------------------------------------------------------------------------------------------------------------------------------*/
+/* Preloader spinner */
+.spinner {width: 50px;height: 50px;border: 2px solid transparent;border-top: 4px solid white;border-radius: 100%;
+    position: absolute;top: 0;bottom: 0;left: 0;right: 0;margin: auto;animation: spin 1s infinite linear;}
+@keyframes spin {from {transform: rotate(0deg);}to {transform: rotate(360deg);}}
+
+
+img {border-radius: 3.5px;}
+.image {border-radius: 3.5px;}
+/* makes the image look clickable */
+.image:hover {cursor: pointer;}
+
+
+
+/*------------------------------------------------------------------------------------------------------------------------------------*/
+/*the movie and tv-series modal styles*/
+.modal-content {background-color: black;}
+.modal-lg {width: 95%}
+.modal {overflow: visible;padding-top: 60px;padding-bottom: 70px;}
+.modal-title {text-align: center;padding: 5px;}
+.modal-open { overflow: visible; }
+.close {color: lightgray;opacity: 0.7;}
+
+/* float the season button right */
+.dropbtn-modal-right {float: right;}
+
+/* float the play button right */
+.play-modal-right {float: right;}
+
+/* positioning of movie collection and tv shows episodes */
+@media screen and (min-width: 800px) {
+    /* 5% column for number of episode */
+    .column-modal-left-left {float: left;width: 5%;padding: 10px;height: 125px;}
+
+    /* 25% column for image of tv serie */
+    .column-modal-left {float: left;width: 25%;padding: 10px;height: 125px;}
+
+    /* 70% column for description of tv serie */
+    .column-modal-right {float: left;width: 70%;padding: 0px;height: 125px;overflow-y: scroll;}
+
+    /* create three equal columns for the images of the movies collection */
+    .column-collection {float: left;width: 33.33%;padding: 5px;}
+    
+    /* the episode modal screen bigger than 800px */
+    .modal-episode-max {display: block;}
+    
+    /* the episode modal screen smaller than 800px */
+    .modal-episode-min {display: none;}
+    
+    /* the trailer button float right */
+    .trailer-modal-right {float: right;}
+
+    /* the tv serie modal buttons position screen smaller than 800px */
+    .modal-buttons-min {display: none;}
+
+    /* the tv serie modal buttons position screen bigger than 800px */
+    .modal-buttons-max {display: block;}
+}
+
+@media screen and (max-width: 800px) {
+    /* the tv serie modal buttons position screen smaller than 800px */
+    .modal-buttons-min {display: block;}
+
+    /* the tv serie modal buttons position screen bigger than 800px */
+    .modal-buttons-max {display: none;}
+
+    /* Create two equal columns for image and tv serie title */
+    .column-modal-responsive-left {float: left;width: 40%;padding: 5px;height: auto;}
+
+    /* Create two equal columns for image and tv serie title */
+    .column-modal-responsive-right {float: left;width: 60%;padding: 5px;height: 90px;overflow-y: scroll;}
+
+    /* Create two equal columns that floats next to each other */
+    .column-collection {float: left;width: 50%;padding: 5px;}
+
+    /* the episode modal screen bigger than 800px */
+    .modal-episode-max {display: none;}
+
+    /* the episode modal screen smaller than 800px */
+    .modal-episode-min {display: block;}
+
+    .dropbtn-modal-remove {display: none;}
+}
+
+
+/*-----------------------------------------------------------------------------------------------------------------------------------*/
+/* Clear floats after the columns */
+.row-modal:after {content: "";display: table;clear: both;}
+
+/* the play button on images */
+.container-modals {position: relative;width: 100%;}
+.image-modals {opacity: 1;display: block;width: 100%;height: auto;transition: .5s ease;backface-visibility: hidden;}
+.middle-modals {transition: .5s ease;opacity: 0;position: absolute;top: 50%;left: 50%;transform: translate(-50%, -50%);-ms-transform: translate(-50%, -50%);text-align: center;}
+.image-modals1 {opacity: 1;display: block;width: 100%;height: auto;transition: .5s ease;backface-visibility: hidden;}
+.middle-modals1 {transition: .5s ease;opacity: 0.85;position: absolute;top: 50%;left: 50%;transform: translate(-50%, -50%);-ms-transform: translate(-50%, -50%);text-align: center;}
+.container-modals:hover .image-modals {opacity: 0.3;}
+.container-modals:hover .middle-modals {opacity: 1;}
+
+
+/*------------------------------------------------------------------------------------------------------------------------------------*/
+/* styles for the season dropdown */
+.dropdown-modal {position: relative;display: inline-block;}
+.modal-dropdown-section {position: absolute;background-color: #f1f1f1;min-width: 100px;overflow: auto;box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);z-index: 1;float: right;}
+.modal-dropdown-section a {color: black;padding: 12px 16px;text-decoration: none;}
+.dropbtn-modal {min-width: 100px;border: 1px solid #f1f1f1;padding: 8px;background-color: black;color: white;border-radius: 4px;}
+.dropbtn-modal:hover {border: 1px solid #f1f1f1;padding: 8px;background-color: #901313;color: white;border-radius: 4px;}
+.dropbtn-modal:focus {border: 1px solid #f1f1f1;padding: 8px;background-color: #901313;color: white;border-radius: 4px;}
+.modal-dropdown .modal-dropdown-section a {display: none;}
+.modal-dropdown .modal-dropdown-section a.open_filter {display: block;}
+.modal-dropdown a:hover {background-color: #ddd;color: red;}
+.dropbtn-modal-right {margin: 2.5px;}
+/* Removes the default arrow from select */
+select {-webkit-appearance: none;-moz-appearance: none;appearance: none;/* Remove default arrow */}
+
+/* create three equal columns for the buttons at the tv serie modal */
+.row-modal-buttons::after {content: "";clear: both;display: table;}
+.column-modal-buttons {float: left;width: 33.33%;padding: 2.5px;}
+
+/*------------------------------------------------------------------------------------------------------------------------------------*/
+/* "/watching" style of video and other styles */
+.container {margin-bottom: 0px;padding-bottom: 0px;padding-top: 0px;}
+@media screen and (max-width: 800px) {
+    .episodetextaligncenter{text-align: center;}
+    .movie-description p{font-size: 12px;}
+    }
+@media screen and (min-width: 800px) {
+      .nextepisoderight {float: right;}
+      .nextepisodeleft {float: left;}
+      .movie-description p{font-size: 20px;} 
+}
+
+.movie-description {background-color: #161616; opacity: 0.9; margin: 0px;}
+.movie-description p{color: white; padding: 5px;}
+
+/* style for the next and previous buttons */
+.arrow {border: solid black;border-width: 0 3px 3px 0;display: inline-block;padding: 3px;}
+.right {transform: rotate(-45deg);-webkit-transform: rotate(-45deg);}
+.left {transform: rotate(135deg);-webkit-transform: rotate(135deg);}
+strong {color: black;border: 4px;}
+.glyphicon{color: red;}
+button {color:black;} 
+.box {background-color: white; padding: 5px;border-radius: 5px; width: 200px;}
+.box:hover {background-color: #A7A7A7;}
+@media screen and (max-width: 450px) {.box {width: 160px;}}
+hr {margin: 0px;}
+@media screen and (max-width: 800px) {
+    .trailer-modal-right {float: left;}
+    /* it removes the float */
+    .modal-responsive-buttons::after {content: "";clear: both;display: table;margin-bottom: 15px;}
+}
+.play-modal-right {float: right;}
+
+
+/*------------------------------------------------------------------------------------------------------------------------------------*/
+/* style for the 404 logo image */
+.errorimage{margin-top: 80px;width: 40%;}
+@media screen and (max-width: 800px) {
+        .errorimage {width: 95%;}
+    }
+.errorresponsive1 {font-size: 16px; margin: 0px; padding: 0px;}
+.column3 {padding-top: 20px;}
+@media screen and (min-width: 800px) {
+    .column3 {float: left;width: 20%;padding-bottom: 15px;padding-right: 2px;padding-left: 2px;}
+    .errorresponsive {font-size: 130px; color: red; margin: 0px; padding: 0px;}
+    }
+@media screen and (max-width: 800px) {
+    .column3 {float: left;width: 33.33%;padding-bottom: 15px;padding-right: 2px;padding-left: 2px;}
+    .errorresponsive {font-size: 100px; color: red; margin: 0px; padding: 0px;}
+    }
+@media screen and (max-width: 500px) {
+    .column3 {float: left;width: 50%;padding-bottom: 15px;padding-right: 2px;padding-left: 2px;}
+    .errorresponsive {font-size: 100px; color: red; margin: 0px; padding: 0px;}
+    }
+    
+    
+
+/*------------------------------------------------------------------------------------------------------------------------------------*/
+/* Search box Style */
+.search-box {border: none; color: red; padding: 5px; width: 87%; margin: 0px; border-radius: 2px; background-color: white;}
+.search-box-button {border: none; margin: 0px; float: right; padding: 5px; background-color: red; width: 13%;}
+
+
+
+/*------------------------------------------------------------------------------------------------------------------------------------*/
+/* Footer */
+footer {background-color: #141414; padding: 25px; margin-top: 100px; background-image: linear-gradient(black,#111111, #111111, #111111, #111111, #111111, #111111, #111111);}
+.column-footer {float: left;width: 25%;padding: 15px;text-align: center;top: 50%;}
+@media screen and (max-width: 800px) {.column-footer {float: none;width: 50%;padding: 15px;}}
+@media screen and (max-width: 450px) {.column-footer {float: none;width: 100%;padding: 15px;}}
+.fa-facebook:hover {color: #3b5998;}
+.fa-twitter:hover {color: #00acee;}
+.fa-youtube:hover {color: #FF0000;}
+.fa-instagram:hover {color:#8a3ab9;}
+.fa-facebook {margin-right: 30px; border-radius: 50%; color: #901313;font-size: 30px; cursor: pointer; transition-duration: 0.5s;}
+.fa-instagram {margin-right: 30px; border-radius: 50%; color: #901313;font-size: 30px; cursor: pointer; transition-duration: 0.5s;}
+.fa-twitter {margin-right: 30px; border-radius: 50%; color: #901313;font-size: 30px; cursor: pointer; transition-duration: 0.5s;}
+.fa-youtube {margin-right: 30px; border-radius: 50%; color: #901313;font-size: 30px; cursor: pointer; transition-duration: 0.5s;}
+
+
+
+
+/*------------------------------------------------------------------------------------------------------------------------------------*/
+/* top movies numbers styles */
+.overlay-index-image {
+  position: absolute; 
+  bottom: 0;
+  left: 0;
+  background-image: linear-gradient(to right, black, black, black,black,black,transparent, transparent);
+  color: #f1f1f1; 
+  height: 100%;
+  width: 110px;
+  transition: .5s ease;
+  opacity:1;
+  color: white;
+  font-size: 20px;
+  padding: 20px;
+  text-align: center;
+  cursor: pointer;
+}
+@media screen and (max-width: 800px) {.overlay-index-image {width: 90px;}}
+@media screen and (max-width: 400px) {.overlay-index-image {width: 65px;} .overlay-index-image img {margin-top: 20px;}}
+.top-movies .swiper-slide:hover {-webkit-transform: scale(1.0);transform: scale(1.0);}
+
+
+
+/*------------------------------------------------------------------------------------------------------------------------------------*/
+/* coming soon slider styles */
+.overlay-comingsoon {
+  position: absolute; 
+  bottom: 0;
+  background-image: linear-gradient(transparent, black, black, black, black, black);
+  color: #f1f1f1; 
+  width: 100%;
+  transition: .5s ease;
+  opacity:1;
+  color: white;
+  font-size: 16px;
+  padding: 20px 0px 20px;
+  text-align: center;
+  cursor: pointer;
+}
+@media screen and (max-width: 800px) {.overlay-comingsoon {font-size: 12px;}}

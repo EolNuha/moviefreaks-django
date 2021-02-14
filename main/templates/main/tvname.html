@@ -1,0 +1,162 @@
+{% extends "main/base.html" %}
+{% block title %}Movie Freaks | Tv Show - {{tvname}}{% endblock %}
+{% block content %}
+{% load static %}
+<style>
+    footer {display: none;}
+</style>
+
+<body style="background-color: black;">
+
+    <div class="container-fluid"
+        style="position: fixed; margin: 10px 0px 0px 0px; display: block; cursor: pointer; z-index: 99;">
+        {% with messages=get_flashed_messages %}
+        {% for msg in messages %}
+        <div class="alert" style="position: absolute; color: white;">
+            <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+            <strong style="color: white;">{{msg}}</strong>
+        </div>
+        {% endfor %}
+        {% endwith %}
+
+    </div>  
+    {% if error_verify == "False" %}
+    <div style="text-align: center; height: 160px;">
+        <img src="{% static 'main/images/logopreloaderwhite.png' %}" class="errorimage">
+        <h2 style="color: #f1f1f1;">
+            Oops! That tv show couldn't be found.<br> Check your spelling!</h2>
+
+        <a href="/"><button class="dropbtn-modal">Home</button></a>
+    </div>
+    {% endif %}
+    <div>
+        {% for items in tvseries %}
+        {% if items.name == tvname %}
+        <h1 style="color: white;text-align: center;">
+            {{tvname}}
+            
+        </h1>
+        <div class="modal-dropdown tvname-dropdown" style="float: right; margin-right: 10px;">
+            <button class="dropbtn-modal">Seasons <span class="fa fa-caret-down"></span></button>
+            <div class="modal-dropdown-section" style="z-index: 1000;">
+                {% with ''|center:last_season as range %}
+                {% for i in range %}
+                <a href="/tvseries/{{tvname}}#{{tvname}} season {{forloop.counter}}">Season {{forloop.counter}}</a>
+                {% endfor %}
+                {% endwith %}
+            </div>
+        </div>
+        {% endif %}
+        {% endfor %}
+        
+    </div>
+    <div class="container-fluid" style="margin-top: 0px; margin-bottom: 100px;">
+
+
+
+        {% with ''|center:last_season as range %}
+        {% for i in range %}
+        {% with forloop.counter as current_season %}
+        <h3 id="{{tvname}} season {{forloop.counter}}">Season {{forloop.counter}}</h3>
+        <div class="netflix">
+            <div class="swiper-container">
+                <div class="swiper-wrapper">
+                    {% for item in series_episodes %}
+                    {% if tvname == item.name %}
+                    {% if item.seasons == current_season %}
+                    <a href="/watching/{{item.name}} season {{item.seasons}} episode {{item.episodes}}"
+                        style="color: white; text-decoration: none;">
+                        <div class="swiper-slide container-image-episodes"><img
+                                src="{{item.imgurl}}" class="image">
+                            <div class="middle">
+                                <div class="text2">Episode {{item.episodes}} <a
+                                        href="/watching/{{item.name}} season {{item.seasons}} episode {{item.episodes}}"><span
+                                            class="fa fa-play"></span></a></div>
+                            </div>
+                        </div>
+                    </a>
+                    {% endif %}
+                    {% endif %}
+                    {% endfor %}
+                </div>
+                <!-- Add Pagination -->
+                <div class="swiper-button-next"></div>
+                <div class="swiper-button-prev"></div>
+            </div>
+        </div>
+        {% endwith %}
+        {% endfor %}
+        {% endwith %}
+
+
+
+    </div>
+    <!-- Swiper JS -->
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+
+    <!-- Initialize Swiper -->
+    <script>
+        var swiper = new Swiper('.swiper-container', {
+            slidesPerView: 6,
+            spaceBetween: 2.5,
+            slidesPerGroup: 6,
+            loop: true,
+            loopFillGroupWithBlank: true,
+            breakpoints: {
+                100: {
+                    slidesPerView: 2,
+                    spaceBetween: 2,
+                    slidesPerGroup: 2,
+                },
+                500: {
+                    slidesPerView: 3,
+                    spaceBetween: 2,
+                    slidesPerGroup: 3,
+                },
+                800: {
+                    slidesPerView: 4,
+                    spaceBetween: 2.5,
+                    slidesPerGroup: 4,
+                },
+                1000: {
+                    slidesPerView: 5,
+                    spaceBetween: 2.5,
+                    slidesPerGroup: 5,
+                },
+                1200: {
+                    slidesPerView: 6,
+                    spaceBetween: 2.5,
+                },
+            },
+            navigation: {
+                nextEl: '.swiper-button-next',
+                prevEl: '.swiper-button-prev',
+            },
+        });
+    </script>
+    <script>
+        function tvseriemyFunction() {
+            var x = document.getElementById("Demo");
+            if (x.className.indexOf("w3-show") == -1) {
+                x.className += " w3-show";
+            } else {
+                x.className = x.className.replace(" w3-show", "");
+            }
+        }
+        // Close the dropdown if the user clicks outside of it
+        window.onclick = function (event) {
+            if (!event.target.matches('.w3-button1')) {
+                var dropdowns = document.getElementsByClassName("w3-dropdown-content");
+                var i;
+                for (i = 0; i < dropdowns.length; i++) {
+                    var openDropdown = dropdowns[i];
+                    if (openDropdown.classList.contains(" ")) {
+                        openDropdown.classList.remove(" ");
+                    }
+                }
+            }
+        }
+    </script>
+
+</body>
+{% endblock %}

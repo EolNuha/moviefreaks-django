@@ -1,0 +1,18 @@
+{% extends "main/base.html" %}
+{% block title %}Movie Freaks | Error 404{% endblock %}
+{% block content %}
+{% load static %}
+<style>
+    footer {display: none;}
+</style>
+<body style="background-color: black;">
+    <div style="text-align: center; margin-top: 50px;">
+        <img src="{% static 'main/images/logopreloaderwhite.png' %}"
+                class="errorimage">
+        <h2 style="color: #f1f1f1;">
+            Oops! That page couldn't be found.</h2>
+            <h4 style="color: lightgray;">The page may have been removed or you misspelled the link!</h4>
+        <a href="/"><button class="dropbtn-modal">Home</button></a>
+    </div>
+</body>
+{% endblock %}

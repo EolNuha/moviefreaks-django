@@ -1,0 +1,845 @@
+{% extends "main/base.html" %}
+{% block title %}Movie Freaks | Search - {{search}}{% endblock %}
+{% block content %}
+{% load static %}
+<style>
+    footer{display: none;}
+</style>
+<body style="background-color: black;">
+    <div class="container-fluid"
+        style="position: fixed; margin: 10px 0px 0px 0px; display: block; cursor: pointer; z-index: 99;">
+        {% with messages=get_flashed_messages %}
+        {% for msg in messages %}
+        <div class="alert" style="position: absolute; color: white;">
+            <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+            <strong style="color: white;">{{msg}}</strong>
+        </div>
+        {% endfor %}
+        {% endwith %}
+    </div>
+    <div class="container-fluid">
+        
+        
+        <div>
+
+            <div>
+                <h3 style="color: #fff; background-color: black; position: relative;">Search for: <strong style="color: #fff;">{{search}}</strong></h3>
+                {% if moviesearchresults %}
+                <div class="row" style="margin-left: 3px; margin-right: 3px;">
+
+                    {% for item in values2 %}
+                    {% with item.seasons|slugify as seasons and item.episodes|slugify as episodes %}
+                    {% with item.name|add:" season "|add:seasons|add:" episode "|add:episodes as variable %}
+                    {% if variable.lower == search %}
+                    <div class="column3">
+                        <div class="zoom">
+                            <a href="/watching/{{variable}}"><img
+                                        src="{{item.imgurl}}" alt="Snow"
+                                        style="max-width:100%"></a>
+                        </div>
+                        <p style="color: white; margin: 0px; padding: 0px;">{{variable}}</p>
+                    </div>
+                    {% endif %}
+                    {% endwith %}
+                    {% endwith %}
+                    {% endfor %}
+
+                    {% for item in values2 %}
+                    {% with item.seasons|slugify as seasons %}
+                    {% with item.name|add:" season "|add:seasons as variable %}
+                    {% if variable.lower == search %}
+                    {% if forloop.counter <= 1 %}
+                    <div class="column3">
+                        <div class="zoom">
+                            <a href="/tvseries/{{item.name}}#{{variable}}"><img
+                                        src="{{item.imgurl}}" alt="Snow"
+                                        style="max-width:100%"></a>
+                        </div>
+                        <p style="color: white; margin: 0px; padding: 0px;">{{variable}}</p>
+                    </div>
+                    {% endif %}
+                    {% endif %}
+                    {% endwith %}
+                    {% endwith %}
+                    {% endfor %}
+                    
+                    {% for item in moviesearchresults %}
+                    {% for i in values %}{% if item == i.name %}
+                    <div class="column3">
+                        <div class="zoom"  data-toggle="modal"
+                        data-target="#myModalMovies{{i.id}}" title="Click for {{i.name}}'s info" style="cursor: pointer;">
+                            <a><img
+                                        src="{{i.imgurl}}" alt="Snow"
+                                        style="max-width:100%"></a>
+                        </div>
+                        <p style="color: white; margin: 0px; padding: 0px;">{{i.name}}</p>
+                        {% with a=i.genres.split %}
+                        {% for j in a %}
+                        <p style="margin: 0px; padding: 0px; float: left; margin-right: 10px;"><a href="/allgenre#{{j}}">
+                                {{j}}</a>
+                        </p>
+                        {% endfor %}
+                        {% endwith %}
+                    </div>
+                    {% endif %}{% endfor %}
+                    {% for i in values1 %}{% if item == i.name %}
+                    <div class="column3">
+                        <div class="zoom" data-toggle="modal" data-target="#myModalTv{{i.id}}" title="Click for {{i.name}}'s info" style="cursor: pointer;">
+                            <a><img
+                                        src="{{i.imgurl}}" alt="Snow"
+                                        style="max-width:100%"></a>
+                        </div>
+                        <p style="color: white; margin: 0px; padding: 0px;">{{i.name}}</p>
+                        {% with a=i.genres.split %}
+                        {% for j in a %}
+                        <p style="margin: 0px; padding: 0px; float: left; margin-right: 10px;"><a href="/tvseries#{{j}}">
+                                {{j}}</a>
+                        </p>
+                        {% endfor %}
+                        {% endwith %}
+                    </div>
+                    {% endif %}{% endfor %}
+                    {% endfor %}
+
+                    {% for item in recommendedresults %}
+                    {% for i in values1 %}{% if i.name == item %}
+                    <div class="column3">
+                        <div class="zoom" data-toggle="modal" data-target="#myModalTv{{i.id}}" title="Click for {{i.name}}'s info" style="cursor: pointer;">
+                            <a><img
+                                        src="{{i.imgurl}}" alt="Snow"
+                                        style="max-width:100%"></a>
+                        </div>
+                        <p style="color: white; margin: 0px; padding: 0px;">{{i.name}}</p>
+                        {% with a=i.genres.split %}
+                        {% for j in a %}
+                        <p style="margin: 0px; padding: 0px; float: left; margin-right: 10px;"><a href="/tvseries#{{j}}">
+                                {{j}}</a>
+                        </p>
+                        {% endfor %}
+                        {% endwith %}
+                    </div>
+                    {% endif %}{% endfor %}
+
+                    {% for j in values %}{% if j.name == item %}
+                    <div class="column3">
+                        <div class="zoom" data-toggle="modal"
+                        data-target="#myModalMovies{{j.id}}" title="Click for {{j.name}}'s info" style="cursor: pointer;">
+                            <a><img
+                                        src="{{j.imgurl}}" alt="Snow"
+                                        style="max-width:100%"></a>
+                        </div>
+                        <p style="color: white; margin: 0px; padding: 0px;">{{j.name}}</p>
+                        {% with a=j.genres.split %}
+                        {% for k in a %}
+                        <p style="margin: 0px; padding: 0px; float: left; margin-right: 10px;"><a href="/allgenre#{{k}}">
+                                {{k}}</a>
+                        </p>
+                        {% endfor %}
+                        {% endwith %}
+                    </div>
+                    {% endif %}{% endfor %}
+                    {% endfor %}
+                </div>
+                {% else %}
+                    <div style="text-align: center; height: 260px;">
+                        <img src="static/main/images/logopreloaderwhite.png"
+                                class="errorimage">
+                        <h2 style="color: #f1f1f1;">
+                            Oops! Couldn't find anything for <b>{{search}}</b></h2>
+                        <a href="/"><button class="dropbtn-modal">Home</button></a>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+    </div>
+    {% for moviesearchitem in moviesearchresults %}
+                   {% for item in values %}{% if moviesearchitem == item.name %}
+                   <div class="modal fade" id="myModalMovies{{item.id}}" role="dialog">
+                    <div class="modal-dialog modal-lg">
+                        <!-- Modal content-->
+                        <div class="modal-content">
+                            <button type="button" class="close" data-dismiss="modal"
+                                style="background-color: black; border-radius: 5px; opacity: 1;">&times;</button>
+                            <h2 class="modal-title">{{item.name}}</h2>
+                            <div class="container-movies">
+                                <a href="/watching/{{item.name}}"><img src="{{item.bigimgurl}}" alt="Snow" loading="lazy"
+                                        style="max-width:100%" class="image-movies"></a>
+                                <div class="middle-movies">
+                                    <a href="/watching/{{item.name}}"><span class="glyphicon glyphicon-play-circle"
+                                            style="font-size: 50px;"></span></a>
+                                </div>
+                            </div>
+                            <div class="container-fluid" style="margin-bottom: 10px;">
+                                <p style="font-size: 20px; padding: 0px; margin: 0px;">Description:</p>
+                                <p style="color: grey;">{{item.description}}</p>
+                                <div style="margin-top: 40px;">
+                                    <div class="modal-responsive-buttons">
+                                        <div style="float: left;">{% with a=item.genres.split %}
+                                            {% for i in a %}<a href="/allgenre#{{i}}" style="margin: 5px;">
+                                                {{i}}</a>
+                                            {% endfor %}
+                                            {% endwith %}
+                                        </div>
+                                        <div style="float: right;" class="modal-stars">
+                                            {% if item.rate < "1" %} <i class="fa fa-star-half-full"></i><i
+                                                    class="fa fa-star-o"></i><i class="fa fa-star-o"></i><i
+                                                    class="fa fa-star-o"></i><i class="fa fa-star-o"></i>
+                                                {% endif %}
+                                                {% if item.rate <= "2" %} {% if item.rate > "1" %}
+                                                    <i class="fa fa-star"></i><i class="fa fa-star-o"></i><i
+                                                        class="fa fa-star-o"></i><i class="fa fa-star-o"></i><i
+                                                        class="fa fa-star-o"></i>
+                                                    {% endif %}
+                                                    {% endif %}
+                                                    {% if item.rate <= "3" %} {% if item.rate > "2" %}
+                                                        <i class="fa fa-star"></i><i class="fa fa-star-half-full"></i><i
+                                                            class="fa fa-star-o"></i><i class="fa fa-star-o"></i><i
+                                                            class="fa fa-star-o"></i>
+                                                        {% endif %}
+                                                        {% endif %}
+                                                        {% if item.rate <= "4" %} {% if item.rate > "3" %}
+                                                            <i class="fa fa-star"></i><i class="fa fa-star"></i><i
+                                                                class="fa fa-star-o"></i><i class="fa fa-star-o"></i><i
+                                                                class="fa fa-star-o"></i>
+                                                            {% endif %}
+                                                            {% endif %}
+                                                            {% if item.rate <= "5" %} {% if item.rate > "4" %}
+                                                                <i class="fa fa-star"></i><i class="fa fa-star"></i><i
+                                                                    class="fa fa-star-half-full"></i><i class="fa fa-star-o"></i><i
+                                                                    class="fa fa-star-o"></i>
+                                                                {% endif %}
+                                                                {% endif %}
+                                                                {% if item.rate <= "6" %} {% if item.rate > "5" %}
+                                                                    <i class="fa fa-star"></i><i class="fa fa-star"></i><i
+                                                                        class="fa fa-star"></i><i class="fa fa-star-o"></i><i
+                                                                        class="fa fa-star-o"></i>
+                                                                    {% endif %}
+                                                                    {% endif %}
+                                                                    {% if item.rate <= "7" %} {% if item.rate > "6" %}
+                                                                        <i class="fa fa-star"></i><i class="fa fa-star"></i><i
+                                                                            class="fa fa-star"></i><i
+                                                                            class="fa fa-star-half-full"></i><i
+                                                                            class="fa fa-star-o"></i>
+                                                                        {% endif %}
+                                                                        {% endif %}
+                                                                        {% if item.rate <= "8" %} {% if item.rate > "7" %}
+                                                                            <i class="fa fa-star"></i><i class="fa fa-star"></i><i
+                                                                                class="fa fa-star"></i><i class="fa fa-star"></i><i
+                                                                                class="fa fa-star-o"></i>
+                                                                            {% endif %}
+                                                                            {% endif %}
+                                                                            {% if item.rate <= "9" %} {% if item.rate > "8" %}
+                                                                                <i class="fa fa-star"></i><i
+                                                                                    class="fa fa-star"></i><i
+                                                                                    class="fa fa-star"></i><i
+                                                                                    class="fa fa-star"></i><i
+                                                                                    class="fa fa-star-half-full"></i>
+                                                                                {% endif %}
+                                                                                {% endif %}
+                                                                                {% if item.rate > "9" %}
+                                                                                <i class="fa fa-star"></i><i
+                                                                                    class="fa fa-star"></i><i
+                                                                                    class="fa fa-star"></i><i
+                                                                                    class="fa fa-star"></i><i
+                                                                                    class="fa fa-star"></i>
+                                                                                {% endif %}
+                                        </div>
+                                    </div>
+                                    <div class="modal-responsive-buttons">
+                                        <a href="{{item.trailer}}" target="_blank"><button class="dropbtn-modal trailer-modal-right"
+                                                style="margin: 2.5px;">Trailer <i class="fa fa-youtube-play"></i>
+                                            </button></a>
+                                        <a href="/watching/{{item.name}}"><button class="dropbtn-modal play-modal-right"
+                                                style="margin: 2.5px;">Play <i class="fa fa-play"></i></button></a>
+                                    </div>
+                                </div>
+                            </div>
+                            <div>
+                                {% if item.collection != "None" %}
+                                <h5 class="container-fluid"><strong style="color: white;">{{item.collection}}</strong> collection:
+                                </h5>
+                                <div class="row" style="margin-bottom: 25px;">
+                                    {% for obj in moviepopup %}{% if obj.collection == item.collection %}{% if obj.collection != "None" %}{% if obj.name != item.name %}
+                                    <div class="column-collection">
+                                        <div class="zoom">
+                                            <a href="/watching/{{obj.name}}"><img src="{{obj.imgurl}}"
+                                                    alt="Snow" style="max-width:100%; border-radius: 6px;" loading="lazy"></a>
+                                        </div>
+                                        <p style="color: white; margin: 0px; padding: 0px;">{{obj.name}}</p>
+                                    </div>
+                                    {% endif %}{% endif %}{% endif %}{% endfor %}
+                                </div>
+                                {% endif %}
+                            </div>
+            
+                        </div>
+            
+                    </div>
+                </div>
+                    {% endif %}{% endfor %}
+
+                    {% for item in values1 %}{% if moviesearchitem == item.name %}
+                    <div class="modal fade" id="myModalTv{{item.id}}" role="dialog">
+                        <div class="modal-dialog modal-lg">
+                            <!-- Modal content-->
+                            <div class="modal-content">
+                                <button type="button" class="close" data-dismiss="modal" style="background-color: black; border-radius: 5px; opacity: 1; padding: 0px;">&times;</button>
+                                <h2 class="modal-title">{{item.name}}</h2>
+                                <div class="container-movies">
+                                    <a href="/tvseries/{{item.name}}"><img src="{{item.bigimgurl}}" alt="Snow"
+                                            style="max-width:100%" class="image-movies" loading="lazy"></a>
+                                    <div class="middle-movies">
+                                        <a href="/tvseries/{{item.name}}"><span class="glyphicon glyphicon-play-circle"
+                                                style="font-size: 50px;"></span></a>
+                                    </div>
+                                </div>
+                                <div class="modal-buttons-max">
+                                    <div class="container-fluid">
+                                        <p style="font-size: 20px; padding: 0px; margin: 0px;">Description:</p>
+                                        <p style="color: grey;">{{item.description}}</p>
+                                        <div style="margin-top: 40px;">
+                                            <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+                                            <div style="float: right; margin: 2.5px;">
+                                                <select class="selectid{{item.id}} dropbtn-modal" style="cursor: pointer;">
+                                                    {% with ''|center:item.number_season as range %}
+                                                    {% for i in range %}
+                                                    <option value="optionid{{item.id}}season{{forloop.counter}}" class="dropbtn-modal">Season
+                                                        {{forloop.counter}} ▾
+                                                    </option>
+                                                    {% endfor %}
+                                                    {% endwith %}
+                                                </select>
+                                            </div>
+                                            <a href="{{item.trailer}}" target="_blank"><button
+                                                    class="dropbtn-modal dropbtn-modal-right">Trailer <i class="fa fa-youtube-play"></i>
+                                                </button></a>
+                                            <a href="/tvseries/{{item.name}}"><button class="dropbtn-modal dropbtn-modal-right">Play <i
+                                                        class="fa fa-play"></i></button></a>
+                                            {% with a=item.genres.split %}{% for i in a %}
+                                            <p style="float: left; margin: 5px; bottom: 0px;"><a href="/tvseries#{{i}}">
+                                                    {{i}}</a>
+                                            </p>
+                                            {% endfor %}{% endwith %}
+                                        </div>
+                                    </div>
+                
+                                </div>
+                                <div class="modal-buttons-min">
+                                    <div class="container-fluid">
+                                        <p style="font-size: 20px; padding: 0px; margin: 0px;">Description:</p>
+                                        <p style="color: grey;">{{item.description}}</p>
+                                        <div style="margin-top: 40px;">
+                
+                                            {% with a=item.genres.split %}
+                                            {% for i in a %}
+                                            <p style="float: left; margin: 5px; bottom: 0px;"><a href="/tvseries#{{i}}">
+                                                    {{i}}</a>
+                                            </p>
+                                            {% endfor %}
+                                            {% endwith %}
+                                            <div style="float: right;" class="modal-stars">
+                                                {% if item.rate < "1" %} <i class="fa fa-star-half-full"></i><i
+                                                        class="fa fa-star-o"></i><i class="fa fa-star-o"></i><i
+                                                        class="fa fa-star-o"></i><i class="fa fa-star-o"></i>
+                                                    {% endif %}
+                                                    {% if item.rate <= "2" %} {% if item.rate > "1" %}
+                                                        <i class="fa fa-star"></i><i class="fa fa-star-o"></i><i
+                                                            class="fa fa-star-o"></i><i class="fa fa-star-o"></i><i
+                                                            class="fa fa-star-o"></i>
+                                                        {% endif %}
+                                                        {% endif %}
+                                                        {% if item.rate <= "3" %} {% if item.rate > "2" %}
+                                                            <i class="fa fa-star"></i><i class="fa fa-star-half-full"></i><i
+                                                                class="fa fa-star-o"></i><i class="fa fa-star-o"></i><i
+                                                                class="fa fa-star-o"></i>
+                                                            {% endif %}
+                                                            {% endif %}
+                                                            {% if item.rate <= "4" %} {% if item.rate > "3" %}
+                                                                <i class="fa fa-star"></i><i class="fa fa-star"></i><i
+                                                                    class="fa fa-star-o"></i><i class="fa fa-star-o"></i><i
+                                                                    class="fa fa-star-o"></i>
+                                                                {% endif %}
+                                                                {% endif %}
+                                                                {% if item.rate <= "5" %} {% if item.rate > "4" %}
+                                                                    <i class="fa fa-star"></i><i class="fa fa-star"></i><i
+                                                                        class="fa fa-star-half-full"></i><i class="fa fa-star-o"></i><i
+                                                                        class="fa fa-star-o"></i>
+                                                                    {% endif %}
+                                                                    {% endif %}
+                                                                    {% if item.rate <= "6" %} {% if item.rate > "5" %}
+                                                                        <i class="fa fa-star"></i><i class="fa fa-star"></i><i
+                                                                            class="fa fa-star"></i><i class="fa fa-star-o"></i><i
+                                                                            class="fa fa-star-o"></i>
+                                                                        {% endif %}
+                                                                        {% endif %}
+                                                                        {% if item.rate <= "7" %} {% if item.rate > "6" %}
+                                                                            <i class="fa fa-star"></i><i class="fa fa-star"></i><i
+                                                                                class="fa fa-star"></i><i
+                                                                                class="fa fa-star-half-full"></i><i
+                                                                                class="fa fa-star-o"></i>
+                                                                            {% endif %}
+                                                                            {% endif %}
+                                                                            {% if item.rate <= "8" %} {% if item.rate > "7" %}
+                                                                                <i class="fa fa-star"></i><i class="fa fa-star"></i><i
+                                                                                    class="fa fa-star"></i><i class="fa fa-star"></i><i
+                                                                                    class="fa fa-star-o"></i>
+                                                                                {% endif %}
+                                                                                {% endif %}
+                                                                                {% if item.rate <= "9" %} {% if item.rate > "8" %}
+                                                                                    <i class="fa fa-star"></i><i
+                                                                                        class="fa fa-star"></i><i
+                                                                                        class="fa fa-star"></i><i
+                                                                                        class="fa fa-star"></i><i
+                                                                                        class="fa fa-star-half-full"></i>
+                                                                                    {% endif %}
+                                                                                    {% endif %}
+                                                                                    {% if item.rate > "9" %}
+                                                                                    <i class="fa fa-star"></i><i
+                                                                                        class="fa fa-star"></i><i
+                                                                                        class="fa fa-star"></i><i
+                                                                                        class="fa fa-star"></i><i
+                                                                                        class="fa fa-star"></i>
+                                                                                    {% endif %}
+                                            </div>
+                
+                                        </div>
+                                    </div>
+                                    <div class="row-modal-buttons" style="text-align: center;">
+                                        <div class="column-modal-buttons">
+                                            <a href="/tvseries/{{item.name}}"><button class="dropbtn-modal">Play <i
+                                                        class="fa fa-play"></i></button></a>
+                                        </div>
+                                        <div class="column-modal-buttons">
+                                            <a href="{{item.trailer}}" target="_blank"><button class="dropbtn-modal">Trailer
+                                                    <i class="fa fa-youtube-play"></i>
+                                                </button></a>
+                                        </div>
+                                        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+                                        <div class="column-modal-buttons">
+                                            <div>
+                                                <select class="selectid{{item.id}} dropbtn-modal"
+                                                    style="cursor: pointer;">
+                                                    {% with ''|center:item.number_season as range %}
+                                                    {% for i in range %}
+                                                    <option value="optionid{{item.id}}season{{forloop.counter}}" class="dropbtn-modal">Season
+                                                        {{forloop.counter}} ▾</option>
+                                                    {% endfor %}
+                                                    {% endwith %}
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                {% with ''|center:item.number_season as range %}
+                                {% for i in range %}
+                                {% with i=forloop.counter %}
+                                <div class="optionid{{item.id}}season{{forloop.counter}} seasonid{{item.id}}">
+                                    <h3 style="text-align: center; padding-bottom: 16px;">Season {{forloop.counter}}</h3>
+                                    {% for episodes in series_episodes %}
+                                    {% if episodes.name == item.name %}
+                                    {% if i == episodes.seasons %}
+                                    <div class="row-modal modal-episode-max">
+                                        <div class="column-modal-left-left" style="text-align: center;">
+                                            <h3 style="color: white; margin: 0px; margin-top: 35px;">{{episodes.episodes}}</h3>
+                                        </div>
+                                        <div class="column-modal-left">
+                                            <div class="container-modals">
+                                                <a
+                                                    href="/watching/{{episodes.name}} season {{episodes.seasons}} episode {{episodes.episodes}}"><img
+                                                        src="{{episodes.imgurl}}" alt="Snow" loading="lazy" style="max-width:100%"
+                                                        class="image-modals image"></a>
+                                                <div class="middle-modals">
+                                                    <a
+                                                        href="/watching/{{episodes.name}} season {{episodes.seasons}} episode {{episodes.episodes}}"><span
+                                                            class="glyphicon glyphicon-play-circle"
+                                                            style="font-size: 35px; color: #f1f1f1;"></span></a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="column-modal-right">
+                                            <h4>{{episodes.title}}</h4>
+                                            <p style="color: grey;">{{episodes.description}}</p>
+                                        </div>
+                                        <hr style="margin:0px; background-color: lightgray; height: 0.6px; border: none;">
+                                    </div>
+                                    <div class="row-modal modal-episode-min">
+                                        <div class="column-modal-responsive-left">
+                                            <div class="container-modals">
+                                                <a
+                                                    href="/watching/{{episodes.name}} season {{episodes.seasons}} episode {{episodes.episodes}}"><img
+                                                        src="{{episodes.imgurl}}" alt="Snow" loading="lazy" style="max-width:100%"
+                                                        class="image-modals1 image"></a>
+                                                <div class="middle-modals1">
+                                                    <a
+                                                        href="/watching/{{episodes.name}} season {{episodes.seasons}} episode {{episodes.episodes}}"><span
+                                                            class="glyphicon glyphicon-play-circle"
+                                                            style="font-size: 35px; color: #f1f1f1;"></span></a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="column-modal-responsive-right">
+                                            <h5>{{episodes.episodes}}. {{episodes.title}}</h5>
+                                        </div>
+                                        <p style="color: grey; float: left;">{{episodes.description}}</p>
+                                        <hr style="margin:0px; background-color: lightgray; height: 0.6px; border: none;">
+                                    </div>
+                                    {% endif %}
+                                    {% endif %}
+                                    {% endfor %}
+                                </div>
+                                {% endwith %}
+                                {% endfor %}
+                                {% endwith %}
+                            </div>
+                
+                        </div>
+                    </div>
+                    {% endif %}{% endfor %}
+    {% endfor %}
+
+    {% for moviesearchitem in recommendedresults %}
+                    {% for item in values %}{% if moviesearchitem == item.name %}
+                    <div class="modal fade" id="myModalMovies{{item.id}}" role="dialog">
+                        <div class="modal-dialog modal-lg">
+                            <!-- Modal content-->
+                            <div class="modal-content">
+                                <button type="button" class="close" data-dismiss="modal"
+                                    style="background-color: black; border-radius: 5px; opacity: 1;">&times;</button>
+                                <h2 class="modal-title">{{item.name}}</h2>
+                                <div class="container-movies">
+                                    <a href="/watching/{{item.name}}"><img src="{{item.bigimgurl}}" alt="Snow" loading="lazy"
+                                            style="max-width:100%" class="image-movies"></a>
+                                    <div class="middle-movies">
+                                        <a href="/watching/{{item.name}}"><span class="glyphicon glyphicon-play-circle"
+                                                style="font-size: 50px;"></span></a>
+                                    </div>
+                                </div>
+                                <div class="container-fluid" style="margin-bottom: 10px;">
+                                    <p style="font-size: 20px; padding: 0px; margin: 0px;">Description:</p>
+                                    <p style="color: grey;">{{item.description}}</p>
+                                    <div style="margin-top: 40px;">
+                                        <div class="modal-responsive-buttons">
+                                            <div style="float: left;">{% with a=item.genres.split %}
+                                                {% for i in a %}<a href="/allgenre#{{i}}" style="margin: 5px;">
+                                                    {{i}}</a>
+                                                {% endfor %}
+                                                {% endwith %}
+                                            </div>
+                                            <div style="float: right;" class="modal-stars">
+                                                {% if item.rate < "1" %} <i class="fa fa-star-half-full"></i><i
+                                                        class="fa fa-star-o"></i><i class="fa fa-star-o"></i><i
+                                                        class="fa fa-star-o"></i><i class="fa fa-star-o"></i>
+                                                    {% endif %}
+                                                    {% if item.rate <= "2" %} {% if item.rate > "1" %}
+                                                        <i class="fa fa-star"></i><i class="fa fa-star-o"></i><i
+                                                            class="fa fa-star-o"></i><i class="fa fa-star-o"></i><i
+                                                            class="fa fa-star-o"></i>
+                                                        {% endif %}
+                                                        {% endif %}
+                                                        {% if item.rate <= "3" %} {% if item.rate > "2" %}
+                                                            <i class="fa fa-star"></i><i class="fa fa-star-half-full"></i><i
+                                                                class="fa fa-star-o"></i><i class="fa fa-star-o"></i><i
+                                                                class="fa fa-star-o"></i>
+                                                            {% endif %}
+                                                            {% endif %}
+                                                            {% if item.rate <= "4" %} {% if item.rate > "3" %}
+                                                                <i class="fa fa-star"></i><i class="fa fa-star"></i><i
+                                                                    class="fa fa-star-o"></i><i class="fa fa-star-o"></i><i
+                                                                    class="fa fa-star-o"></i>
+                                                                {% endif %}
+                                                                {% endif %}
+                                                                {% if item.rate <= "5" %} {% if item.rate > "4" %}
+                                                                    <i class="fa fa-star"></i><i class="fa fa-star"></i><i
+                                                                        class="fa fa-star-half-full"></i><i class="fa fa-star-o"></i><i
+                                                                        class="fa fa-star-o"></i>
+                                                                    {% endif %}
+                                                                    {% endif %}
+                                                                    {% if item.rate <= "6" %} {% if item.rate > "5" %}
+                                                                        <i class="fa fa-star"></i><i class="fa fa-star"></i><i
+                                                                            class="fa fa-star"></i><i class="fa fa-star-o"></i><i
+                                                                            class="fa fa-star-o"></i>
+                                                                        {% endif %}
+                                                                        {% endif %}
+                                                                        {% if item.rate <= "7" %} {% if item.rate > "6" %}
+                                                                            <i class="fa fa-star"></i><i class="fa fa-star"></i><i
+                                                                                class="fa fa-star"></i><i
+                                                                                class="fa fa-star-half-full"></i><i
+                                                                                class="fa fa-star-o"></i>
+                                                                            {% endif %}
+                                                                            {% endif %}
+                                                                            {% if item.rate <= "8" %} {% if item.rate > "7" %}
+                                                                                <i class="fa fa-star"></i><i class="fa fa-star"></i><i
+                                                                                    class="fa fa-star"></i><i class="fa fa-star"></i><i
+                                                                                    class="fa fa-star-o"></i>
+                                                                                {% endif %}
+                                                                                {% endif %}
+                                                                                {% if item.rate <= "9" %} {% if item.rate > "8" %}
+                                                                                    <i class="fa fa-star"></i><i
+                                                                                        class="fa fa-star"></i><i
+                                                                                        class="fa fa-star"></i><i
+                                                                                        class="fa fa-star"></i><i
+                                                                                        class="fa fa-star-half-full"></i>
+                                                                                    {% endif %}
+                                                                                    {% endif %}
+                                                                                    {% if item.rate > "9" %}
+                                                                                    <i class="fa fa-star"></i><i
+                                                                                        class="fa fa-star"></i><i
+                                                                                        class="fa fa-star"></i><i
+                                                                                        class="fa fa-star"></i><i
+                                                                                        class="fa fa-star"></i>
+                                                                                    {% endif %}
+                                            </div>
+                                        </div>
+                                        <div class="modal-responsive-buttons">
+                                            <a href="{{item.trailer}}" target="_blank"><button class="dropbtn-modal trailer-modal-right"
+                                                    style="margin: 2.5px;">Trailer <i class="fa fa-youtube-play"></i>
+                                                </button></a>
+                                            <a href="/watching/{{item.name}}"><button class="dropbtn-modal play-modal-right"
+                                                    style="margin: 2.5px;">Play <i class="fa fa-play"></i></button></a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div>
+                                    {% if item.collection != "None" %}
+                                    <h5 class="container-fluid"><strong style="color: white;">{{item.collection}}</strong> collection:
+                                    </h5>
+                                    <div class="row" style="margin-bottom: 25px;">
+                                        {% for obj in moviepopup %}{% if obj.collection == item.collection %}{% if obj.collection != "None" %}{% if obj.name != item.name %}
+                                        <div class="column-collection">
+                                            <div class="zoom">
+                                                <a href="/watching/{{obj.name}}"><img src="{{obj.imgurl}}"
+                                                        alt="Snow" style="max-width:100%; border-radius: 6px;" loading="lazy"></a>
+                                            </div>
+                                            <p style="color: white; margin: 0px; padding: 0px;">{{obj.name}}</p>
+                                        </div>
+                                        {% endif %}{% endif %}{% endif %}{% endfor %}
+                                    </div>
+                                    {% endif %}
+                                </div>
+                
+                            </div>
+                
+                        </div>
+                    </div>
+                      {% endif %}{% endfor %}
+  
+                      {% for item in values1 %}{% if moviesearchitem == item.name %}
+                      <div class="modal fade" id="myModalTv{{item.id}}" role="dialog">
+                        <div class="modal-dialog modal-lg">
+                            <!-- Modal content-->
+                            <div class="modal-content">
+                                <button type="button" class="close" data-dismiss="modal" style="background-color: black; border-radius: 5px; opacity: 1; padding: 0px;">&times;</button>
+                                <h2 class="modal-title">{{item.name}}</h2>
+                                <div class="container-movies">
+                                    <a href="/tvseries/{{item.name}}"><img src="{{item.bigimgurl}}" alt="Snow"
+                                            style="max-width:100%" class="image-movies" loading="lazy"></a>
+                                    <div class="middle-movies">
+                                        <a href="/tvseries/{{item.name}}"><span class="glyphicon glyphicon-play-circle"
+                                                style="font-size: 50px;"></span></a>
+                                    </div>
+                                </div>
+                                <div class="modal-buttons-max">
+                                    <div class="container-fluid">
+                                        <p style="font-size: 20px; padding: 0px; margin: 0px;">Description:</p>
+                                        <p style="color: grey;">{{item.description}}</p>
+                                        <div style="margin-top: 40px;">
+                                            <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+                                            <div style="float: right; margin: 2.5px;">
+                                                <select class="selectid{{item.id}} dropbtn-modal" style="cursor: pointer;">
+                                                    {% with ''|center:item.number_season as range %}
+                                                    {% for i in range %}
+                                                    <option value="optionid{{item.id}}season{{forloop.counter}}" class="dropbtn-modal">Season
+                                                        {{forloop.counter}} ▾
+                                                    </option>
+                                                    {% endfor %}
+                                                    {% endwith %}
+                                                </select>
+                                            </div>
+                                            <a href="{{item.trailer}}" target="_blank"><button
+                                                    class="dropbtn-modal dropbtn-modal-right">Trailer <i class="fa fa-youtube-play"></i>
+                                                </button></a>
+                                            <a href="/tvseries/{{item.name}}"><button class="dropbtn-modal dropbtn-modal-right">Play <i
+                                                        class="fa fa-play"></i></button></a>
+                                            {% with a=item.genres.split %}{% for i in a %}
+                                            <p style="float: left; margin: 5px; bottom: 0px;"><a href="/tvseries#{{i}}">
+                                                    {{i}}</a>
+                                            </p>
+                                            {% endfor %}{% endwith %}
+                                        </div>
+                                    </div>
+                
+                                </div>
+                                <div class="modal-buttons-min">
+                                    <div class="container-fluid">
+                                        <p style="font-size: 20px; padding: 0px; margin: 0px;">Description:</p>
+                                        <p style="color: grey;">{{item.description}}</p>
+                                        <div style="margin-top: 40px;">
+                
+                                            {% with a=item.genres.split %}
+                                            {% for i in a %}
+                                            <p style="float: left; margin: 5px; bottom: 0px;"><a href="/tvseries#{{i}}">
+                                                    {{i}}</a>
+                                            </p>
+                                            {% endfor %}
+                                            {% endwith %}
+                                            <div style="float: right;" class="modal-stars">
+                                                {% if item.rate < "1" %} <i class="fa fa-star-half-full"></i><i
+                                                        class="fa fa-star-o"></i><i class="fa fa-star-o"></i><i
+                                                        class="fa fa-star-o"></i><i class="fa fa-star-o"></i>
+                                                    {% endif %}
+                                                    {% if item.rate <= "2" %} {% if item.rate > "1" %}
+                                                        <i class="fa fa-star"></i><i class="fa fa-star-o"></i><i
+                                                            class="fa fa-star-o"></i><i class="fa fa-star-o"></i><i
+                                                            class="fa fa-star-o"></i>
+                                                        {% endif %}
+                                                        {% endif %}
+                                                        {% if item.rate <= "3" %} {% if item.rate > "2" %}
+                                                            <i class="fa fa-star"></i><i class="fa fa-star-half-full"></i><i
+                                                                class="fa fa-star-o"></i><i class="fa fa-star-o"></i><i
+                                                                class="fa fa-star-o"></i>
+                                                            {% endif %}
+                                                            {% endif %}
+                                                            {% if item.rate <= "4" %} {% if item.rate > "3" %}
+                                                                <i class="fa fa-star"></i><i class="fa fa-star"></i><i
+                                                                    class="fa fa-star-o"></i><i class="fa fa-star-o"></i><i
+                                                                    class="fa fa-star-o"></i>
+                                                                {% endif %}
+                                                                {% endif %}
+                                                                {% if item.rate <= "5" %} {% if item.rate > "4" %}
+                                                                    <i class="fa fa-star"></i><i class="fa fa-star"></i><i
+                                                                        class="fa fa-star-half-full"></i><i class="fa fa-star-o"></i><i
+                                                                        class="fa fa-star-o"></i>
+                                                                    {% endif %}
+                                                                    {% endif %}
+                                                                    {% if item.rate <= "6" %} {% if item.rate > "5" %}
+                                                                        <i class="fa fa-star"></i><i class="fa fa-star"></i><i
+                                                                            class="fa fa-star"></i><i class="fa fa-star-o"></i><i
+                                                                            class="fa fa-star-o"></i>
+                                                                        {% endif %}
+                                                                        {% endif %}
+                                                                        {% if item.rate <= "7" %} {% if item.rate > "6" %}
+                                                                            <i class="fa fa-star"></i><i class="fa fa-star"></i><i
+                                                                                class="fa fa-star"></i><i
+                                                                                class="fa fa-star-half-full"></i><i
+                                                                                class="fa fa-star-o"></i>
+                                                                            {% endif %}
+                                                                            {% endif %}
+                                                                            {% if item.rate <= "8" %} {% if item.rate > "7" %}
+                                                                                <i class="fa fa-star"></i><i class="fa fa-star"></i><i
+                                                                                    class="fa fa-star"></i><i class="fa fa-star"></i><i
+                                                                                    class="fa fa-star-o"></i>
+                                                                                {% endif %}
+                                                                                {% endif %}
+                                                                                {% if item.rate <= "9" %} {% if item.rate > "8" %}
+                                                                                    <i class="fa fa-star"></i><i
+                                                                                        class="fa fa-star"></i><i
+                                                                                        class="fa fa-star"></i><i
+                                                                                        class="fa fa-star"></i><i
+                                                                                        class="fa fa-star-half-full"></i>
+                                                                                    {% endif %}
+                                                                                    {% endif %}
+                                                                                    {% if item.rate > "9" %}
+                                                                                    <i class="fa fa-star"></i><i
+                                                                                        class="fa fa-star"></i><i
+                                                                                        class="fa fa-star"></i><i
+                                                                                        class="fa fa-star"></i><i
+                                                                                        class="fa fa-star"></i>
+                                                                                    {% endif %}
+                                            </div>
+                
+                                        </div>
+                                    </div>
+                                    <div class="row-modal-buttons" style="text-align: center;">
+                                        <div class="column-modal-buttons">
+                                            <a href="/tvseries/{{item.name}}"><button class="dropbtn-modal">Play <i
+                                                        class="fa fa-play"></i></button></a>
+                                        </div>
+                                        <div class="column-modal-buttons">
+                                            <a href="{{item.trailer}}" target="_blank"><button class="dropbtn-modal">Trailer
+                                                    <i class="fa fa-youtube-play"></i>
+                                                </button></a>
+                                        </div>
+                                        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+                                        <div class="column-modal-buttons">
+                                            <div>
+                                                <select class="selectid{{item.id}} dropbtn-modal"
+                                                    style="cursor: pointer;">
+                                                    {% with ''|center:item.number_season as range %}
+                                                    {% for i in range %}
+                                                    <option value="optionid{{item.id}}season{{forloop.counter}}" class="dropbtn-modal">Season
+                                                        {{forloop.counter}} ▾</option>
+                                                    {% endfor %}
+                                                    {% endwith %}
+                                                </select>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                {% with ''|center:item.number_season as range %}
+                                {% for i in range %}
+                                {% with i=forloop.counter %}
+                                <div class="optionid{{item.id}}season{{forloop.counter}} seasonid{{item.id}}">
+                                    <h3 style="text-align: center; padding-bottom: 16px;">Season {{forloop.counter}}</h3>
+                                    {% for episodes in series_episodes %}
+                                    {% if episodes.name == item.name %}
+                                    {% if i == episodes.seasons %}
+                                    <div class="row-modal modal-episode-max">
+                                        <div class="column-modal-left-left" style="text-align: center;">
+                                            <h3 style="color: white; margin: 0px; margin-top: 35px;">{{episodes.episodes}}</h3>
+                                        </div>
+                                        <div class="column-modal-left">
+                                            <div class="container-modals">
+                                                <a
+                                                    href="/watching/{{episodes.name}} season {{episodes.seasons}} episode {{episodes.episodes}}"><img
+                                                        src="{{episodes.imgurl}}" alt="Snow" loading="lazy" style="max-width:100%"
+                                                        class="image-modals image"></a>
+                                                <div class="middle-modals">
+                                                    <a
+                                                        href="/watching/{{episodes.name}} season {{episodes.seasons}} episode {{episodes.episodes}}"><span
+                                                            class="glyphicon glyphicon-play-circle"
+                                                            style="font-size: 35px; color: #f1f1f1;"></span></a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="column-modal-right">
+                                            <h4>{{episodes.title}}</h4>
+                                            <p style="color: grey;">{{episodes.description}}</p>
+                                        </div>
+                                        <hr style="margin:0px; background-color: lightgray; height: 0.6px; border: none;">
+                                    </div>
+                                    <div class="row-modal modal-episode-min">
+                                        <div class="column-modal-responsive-left">
+                                            <div class="container-modals">
+                                                <a
+                                                    href="/watching/{{episodes.name}} season {{episodes.seasons}} episode {{episodes.episodes}}"><img
+                                                        src="{{episodes.imgurl}}" alt="Snow" loading="lazy" style="max-width:100%"
+                                                        class="image-modals1 image"></a>
+                                                <div class="middle-modals1">
+                                                    <a
+                                                        href="/watching/{{episodes.name}} season {{episodes.seasons}} episode {{episodes.episodes}}"><span
+                                                            class="glyphicon glyphicon-play-circle"
+                                                            style="font-size: 35px; color: #f1f1f1;"></span></a>
+                                                </div>
+                                            </div>
+                                        </div>
+                                        <div class="column-modal-responsive-right">
+                                            <h5>{{episodes.episodes}}. {{episodes.title}}</h5>
+                                        </div>
+                                        <p style="color: grey; float: left;">{{episodes.description}}</p>
+                                        <hr style="margin:0px; background-color: lightgray; height: 0.6px; border: none;">
+                                    </div>
+                                    {% endif %}
+                                    {% endif %}
+                                    {% endfor %}
+                                </div>
+                                {% endwith %}
+                                {% endfor %}
+                                {% endwith %}
+                            </div>
+                
+                        </div>
+                    </div>
+                      {% endif %}{% endfor %}
+    {% endfor %}
+</body>
+{% endblock %}

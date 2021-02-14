@@ -1,0 +1,359 @@
+{% extends "main/base.html" %}
+{% block title %}Movie Freaks | Tv Shows{% endblock %}
+{% block content %}
+
+
+<body style="background-color: black;">
+
+    <div class="container-fluid"
+        style="position: fixed; margin: 10px 0px 0px 0px; display: block; cursor: pointer; z-index: 99;">
+        {% with messages=get_flashed_messages %}
+        {% for msg in messages %}
+        <div class="alert" style="position: absolute; color: white;">
+            <span class="closebtn" onclick="this.parentElement.style.display='none';">&times;</span>
+            <strong style="color: white;">{{msg}}</strong>
+        </div>
+        {% endfor %}
+        {% endwith %}
+
+    </div>
+
+    <div class="container-fluid" style="margin-top: 0px; margin-bottom: 100px;">
+        <h3 style="color: white;  margin-top: 25px;">Latest TV Shows</h3>
+        <div class="netflix">
+            <div class="swiper-container">
+                <div class="swiper-wrapper">
+                    {% for item in latest %}
+                    <div class="swiper-slide container-image" data-toggle="modal" data-target="#myModalTv{{item.id}}"
+                    title="Click for {{item.name}}'s info"><a><img
+                                src="{{item.imgurl}}" class="image" loading="lazy"></a>
+                        <div class="middle" >
+                            <div class="text">{{item.name}} <i class="fa fa-play" style="color: red;"></i></div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+                <!-- Add Pagination -->
+                <div class="swiper-button-next"></div>
+                <div class="swiper-button-prev"></div>
+            </div>
+        </div>
+
+        {% for k in tvgenres %}
+        <!--  Genre - {{k}}  -->
+        <h3 style="color: white;" id="{{k}}">{{k}}</h3>
+        <div class="netflix">
+            <div class="swiper-container">
+                <div class="swiper-wrapper">
+                    {% for item in all_tv %}
+                    {% for i in item.genres.split %}
+                    {% if i == k %}
+                    <div class="swiper-slide container-image" data-toggle="modal" data-target="#myModalTv{{item.id}}"
+                    title="Click for {{item.name}}'s info"><a><img
+                                src="{{item.imgurl}}" class="image" loading="lazy"></a>
+                        <div class="middle" >
+                            <div class="text">{{item.name}} <i class="fa fa-play" style="color: red;"></i></div>
+                        </div>
+                    </div>
+                    {% endif %}
+                    {% endfor %}
+                    {% endfor %}
+                </div>
+                <!-- Add Pagination -->
+                <div class="swiper-button-next"></div>
+                <div class="swiper-button-prev"></div>
+            </div>
+        </div>
+        <!--  End of Genre - {{k}}  -->
+        {% endfor %}
+
+    </div>
+
+    {% for item in all_tv %}
+    <div class="modal fade" id="myModalTv{{item.id}}" role="dialog">
+        <div class="modal-dialog modal-lg">
+            <!-- Modal content-->
+            <div class="modal-content">
+                <button type="button" class="close" data-dismiss="modal" style="background-color: black; border-radius: 5px; opacity: 1; padding: 0px;">&times;</button>
+                <h2 class="modal-title">{{item.name}}</h2>
+                <div class="container-movies">
+                    <a href="/tvseries/{{item.name}}"><img src="{{item.bigimgurl}}" alt="Snow"
+                            style="max-width:100%" class="image-movies" loading="lazy"></a>
+                    <div class="middle-movies">
+                        <a href="/tvseries/{{item.name}}"><span class="glyphicon glyphicon-play-circle"
+                                style="font-size: 50px;"></span></a>
+                    </div>
+                </div>
+                <div class="modal-buttons-max">
+                    <div class="container-fluid">
+                        <p style="font-size: 20px; padding: 0px; margin: 0px;">Description:</p>
+                        <p style="color: grey;">{{item.description}}</p>
+                        <div style="margin-top: 40px;">
+                            <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+                            <div style="float: right; margin: 2.5px;">
+                                <select class="selectid{{item.id}} dropbtn-modal" style="cursor: pointer;">
+                                    {% with ''|center:item.number_season as range %}
+                                    {% for i in range %}
+                                    <option value="optionid{{item.id}}season{{forloop.counter}}" class="dropbtn-modal">Season
+                                        {{forloop.counter}} ▾
+                                    </option>
+                                    {% endfor %}
+                                    {% endwith %}
+                                </select>
+                            </div>
+                            <a href="{{item.trailer}}" target="_blank"><button
+                                    class="dropbtn-modal dropbtn-modal-right">Trailer <i class="fa fa-youtube-play"></i>
+                                </button></a>
+                            <a href="/tvseries/{{item.name}}"><button class="dropbtn-modal dropbtn-modal-right">Play <i
+                                        class="fa fa-play"></i></button></a>
+                            {% with a=item.genres.split %}{% for i in a %}
+                            <p style="float: left; margin: 5px; bottom: 0px;"><a href="/tvseries#{{i}}">
+                                    {{i}}</a>
+                            </p>
+                            {% endfor %}{% endwith %}
+                        </div>
+                    </div>
+
+                </div>
+                <div class="modal-buttons-min">
+                    <div class="container-fluid">
+                        <p style="font-size: 20px; padding: 0px; margin: 0px;">Description:</p>
+                        <p style="color: grey;">{{item.description}}</p>
+                        <div style="margin-top: 40px;">
+
+                            {% with a=item.genres.split %}
+                            {% for i in a %}
+                            <p style="float: left; margin: 5px; bottom: 0px;"><a href="/tvseries#{{i}}">
+                                    {{i}}</a>
+                            </p>
+                            {% endfor %}
+                            {% endwith %}
+                            <div style="float: right;" class="modal-stars">
+                                {% if item.rate < "1" %} <i class="fa fa-star-half-full"></i><i
+                                        class="fa fa-star-o"></i><i class="fa fa-star-o"></i><i
+                                        class="fa fa-star-o"></i><i class="fa fa-star-o"></i>
+                                    {% endif %}
+                                    {% if item.rate <= "2" %} {% if item.rate > "1" %}
+                                        <i class="fa fa-star"></i><i class="fa fa-star-o"></i><i
+                                            class="fa fa-star-o"></i><i class="fa fa-star-o"></i><i
+                                            class="fa fa-star-o"></i>
+                                        {% endif %}
+                                        {% endif %}
+                                        {% if item.rate <= "3" %} {% if item.rate > "2" %}
+                                            <i class="fa fa-star"></i><i class="fa fa-star-half-full"></i><i
+                                                class="fa fa-star-o"></i><i class="fa fa-star-o"></i><i
+                                                class="fa fa-star-o"></i>
+                                            {% endif %}
+                                            {% endif %}
+                                            {% if item.rate <= "4" %} {% if item.rate > "3" %}
+                                                <i class="fa fa-star"></i><i class="fa fa-star"></i><i
+                                                    class="fa fa-star-o"></i><i class="fa fa-star-o"></i><i
+                                                    class="fa fa-star-o"></i>
+                                                {% endif %}
+                                                {% endif %}
+                                                {% if item.rate <= "5" %} {% if item.rate > "4" %}
+                                                    <i class="fa fa-star"></i><i class="fa fa-star"></i><i
+                                                        class="fa fa-star-half-full"></i><i class="fa fa-star-o"></i><i
+                                                        class="fa fa-star-o"></i>
+                                                    {% endif %}
+                                                    {% endif %}
+                                                    {% if item.rate <= "6" %} {% if item.rate > "5" %}
+                                                        <i class="fa fa-star"></i><i class="fa fa-star"></i><i
+                                                            class="fa fa-star"></i><i class="fa fa-star-o"></i><i
+                                                            class="fa fa-star-o"></i>
+                                                        {% endif %}
+                                                        {% endif %}
+                                                        {% if item.rate <= "7" %} {% if item.rate > "6" %}
+                                                            <i class="fa fa-star"></i><i class="fa fa-star"></i><i
+                                                                class="fa fa-star"></i><i
+                                                                class="fa fa-star-half-full"></i><i
+                                                                class="fa fa-star-o"></i>
+                                                            {% endif %}
+                                                            {% endif %}
+                                                            {% if item.rate <= "8" %} {% if item.rate > "7" %}
+                                                                <i class="fa fa-star"></i><i class="fa fa-star"></i><i
+                                                                    class="fa fa-star"></i><i class="fa fa-star"></i><i
+                                                                    class="fa fa-star-o"></i>
+                                                                {% endif %}
+                                                                {% endif %}
+                                                                {% if item.rate <= "9" %} {% if item.rate > "8" %}
+                                                                    <i class="fa fa-star"></i><i
+                                                                        class="fa fa-star"></i><i
+                                                                        class="fa fa-star"></i><i
+                                                                        class="fa fa-star"></i><i
+                                                                        class="fa fa-star-half-full"></i>
+                                                                    {% endif %}
+                                                                    {% endif %}
+                                                                    {% if item.rate > "9" %}
+                                                                    <i class="fa fa-star"></i><i
+                                                                        class="fa fa-star"></i><i
+                                                                        class="fa fa-star"></i><i
+                                                                        class="fa fa-star"></i><i
+                                                                        class="fa fa-star"></i>
+                                                                    {% endif %}
+                            </div>
+
+                        </div>
+                    </div>
+                    <div class="row-modal-buttons" style="text-align: center;">
+                        <div class="column-modal-buttons">
+                            <a href="/tvseries/{{item.name}}"><button class="dropbtn-modal">Play <i
+                                        class="fa fa-play"></i></button></a>
+                        </div>
+                        <div class="column-modal-buttons">
+                            <a href="{{item.trailer}}" target="_blank"><button class="dropbtn-modal">Trailer
+                                    <i class="fa fa-youtube-play"></i>
+                                </button></a>
+                        </div>
+                        <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+                        <div class="column-modal-buttons">
+                            <div>
+                                <select class="selectid{{item.id}} dropbtn-modal"
+                                    style="cursor: pointer;">
+                                    {% with ''|center:item.number_season as range %}
+                                    {% for i in range %}
+                                    <option value="optionid{{item.id}}season{{forloop.counter}}" class="dropbtn-modal">Season
+                                        {{forloop.counter}} ▾</option>
+                                    {% endfor %}
+                                    {% endwith %}
+                                </select>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                {% with ''|center:item.number_season as range %}
+                {% for i in range %}
+                {% with i=forloop.counter %}
+                <div class="optionid{{item.id}}season{{forloop.counter}} seasonid{{item.id}}">
+                    <h3 style="text-align: center; padding-bottom: 16px;">Season {{forloop.counter}}</h3>
+                    {% for episodes in series_episodes %}
+                    {% if episodes.name == item.name %}
+                    {% if i == episodes.seasons %}
+                    <div class="row-modal modal-episode-max">
+                        <div class="column-modal-left-left" style="text-align: center;">
+                            <h3 style="color: white; margin: 0px; margin-top: 35px;">{{episodes.episodes}}</h3>
+                        </div>
+                        <div class="column-modal-left">
+                            <div class="container-modals">
+                                <a
+                                    href="/watching/{{episodes.name}} season {{episodes.seasons}} episode {{episodes.episodes}}"><img
+                                        src="{{episodes.imgurl}}" alt="Snow" loading="lazy" style="max-width:100%"
+                                        class="image-modals image"></a>
+                                <div class="middle-modals">
+                                    <a
+                                        href="/watching/{{episodes.name}} season {{episodes.seasons}} episode {{episodes.episodes}}"><span
+                                            class="glyphicon glyphicon-play-circle"
+                                            style="font-size: 35px; color: #f1f1f1;"></span></a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="column-modal-right">
+                            <h4>{{episodes.title}}</h4>
+                            <p style="color: grey;">{{episodes.description}}</p>
+                        </div>
+                        <hr style="margin:0px; background-color: lightgray; height: 0.6px; border: none;">
+                    </div>
+                    <div class="row-modal modal-episode-min">
+                        <div class="column-modal-responsive-left">
+                            <div class="container-modals">
+                                <a
+                                    href="/watching/{{episodes.name}} season {{episodes.seasons}} episode {{episodes.episodes}}"><img
+                                        src="{{episodes.imgurl}}" alt="Snow" loading="lazy" style="max-width:100%"
+                                        class="image-modals1 image"></a>
+                                <div class="middle-modals1">
+                                    <a
+                                        href="/watching/{{episodes.name}} season {{episodes.seasons}} episode {{episodes.episodes}}"><span
+                                            class="glyphicon glyphicon-play-circle"
+                                            style="font-size: 35px; color: #f1f1f1;"></span></a>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="column-modal-responsive-right">
+                            <h5>{{episodes.episodes}}. {{episodes.title}}</h5>
+                        </div>
+                        <p style="color: grey; float: left;">{{episodes.description}}</p>
+                        <hr style="margin:0px; background-color: lightgray; height: 0.6px; border: none;">
+                    </div>
+                    {% endif %}
+                    {% endif %}
+                    {% endfor %}
+                </div>
+                {% endwith %}
+                {% endfor %}
+                {% endwith %}
+            </div>
+
+        </div>
+    </div>
+    {% endfor %}
+    <!-- Swiper JS -->
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+
+    <!-- Initialize Swiper -->
+    <script>
+        var swiper = new Swiper('.swiper-container', {
+            slidesPerView: 6,
+            spaceBetween: 2.5,
+            slidesPerGroup: 6,
+            loop: true,
+            breakpoints: {
+                100: {
+                    slidesPerView: 2,
+                    spaceBetween: 2,
+                    slidesPerGroup: 2,
+                },
+                500: {
+                    slidesPerView: 3,
+                    spaceBetween: 2,
+                    slidesPerGroup: 3,
+                },
+                800: {
+                    slidesPerView: 4,
+                    spaceBetween: 2.5,
+                    slidesPerGroup: 4,
+                },
+                1000: {
+                    slidesPerView: 5,
+                    spaceBetween: 2.5,
+                    slidesPerGroup: 5,
+                },
+                1200: {
+                    slidesPerView: 6,
+                    spaceBetween: 2.5,
+                },
+            },
+            navigation: {
+                nextEl: '.swiper-button-next',
+                prevEl: '.swiper-button-prev',
+            },
+        });
+        var swiper = new Swiper('.swiper-container-auto', {
+            slidesPerView: 5,
+            spaceBetween: 1,
+            freeMode: true,
+            loop: true,
+            breakpoints: {
+                100: {
+                    slidesPerView: 1,
+                },
+                500: {
+                    slidesPerView: 2,
+                },
+                800: {
+                    slidesPerView: 3,
+                },
+                1000: {
+                    slidesPerView: 4,
+                },
+                1200: {
+                    slidesPerView: 5,
+                },
+            },
+            autoplay: {
+                delay: 2800,
+                disableOnInteraction: false,
+            },
+        });
+    </script>
+</body>
+{% endblock %}

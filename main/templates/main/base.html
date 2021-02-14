@@ -1,0 +1,254 @@
+{% spaceless %}
+<!DOCTYPE html>
+<!--
+    ""
+    "" 
+    Created by Eol Nuha 
+    
+    ""
+    ""
+-->
+<html class="wide wow-animation" lang="en">
+{% load static %}
+<head>
+    <meta charset="utf-8">
+    <title>{% block title %}{% endblock %}</title>
+    <meta name="viewport" content="width=device-width, height=device-height, initial-scale=1">
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <link rel="shortcut icon" type="image/png" href="{% static 'main/images/uplogo1.png' %}">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="https://www.w3schools.com/w3css/4/w3.css">
+    <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
+    <link rel="stylesheet" href="{% static 'main/styles/swiper-bundle1.min.css' %}">
+    <link rel="stylesheet" href="{% static 'main/styles/css/topnavbar.css' %}">
+    <link rel="stylesheet" href="{% static 'main/styles/css/basestyle2.7.css' %}">
+    <link rel="stylesheet" href="{% static 'main/styles/css/preloaderstyle.css' %}">
+
+
+</head>
+
+<!-- oncontextmenu="return false;" - disable right click -->
+
+<body style="background-color: black !important; fill: black !important;" oncontextmenu="return false;">
+    <div class="page-loader">
+        <div class="page-loader-logo-name"><img src="{% static 'main/images/logopreloader#901313.png' %}"
+                style="max-width: 100%;"></div>
+        <div class="preloader-wrapper preloader-big active">
+            <div class="spinner"></div>
+        </div>
+    </div>
+    <button onclick="topFunction()" id="myBtn" title="Go to top"><span class="fa fa-angle-up"></button>
+    <script>
+        //Get the button
+        var mybutton = document.getElementById("myBtn");
+
+        // When the user scrolls down 20px from the top of the document, show the button
+        window.onscroll = function () { scrollFunction() };
+        
+        function scrollFunction() {
+            if (document.body.scrollTop > 100 || document.documentElement.scrollTop > 100) {
+                mybutton.style.display = "block";
+            } else {
+                mybutton.style.display = "none";
+            }
+        }
+
+        // When the user clicks on the button, scroll to the top of the document
+        function topFunction() {
+            document.body.scrollTop = 0;
+            document.documentElement.scrollTop = 0;
+        }
+    </script>
+
+    <div class="rd-navbar-wrap rd-navbar-default">
+
+        <nav class="rd-navbar" data-layout="rd-navbar-fixed" data-sm-layout="rd-navbar-fixed"
+            data-md-layout="rd-navbar-fixed" data-lg-layout="rd-navbar-fullwidth" data-xl-layout="rd-navbar-static"
+            data-xxl-layout="rd-navbar-static" data-xxxl-layout="rd-navbar-static"
+            data-lg-device-layout="rd-navbar-fullwidth" data-xl-device-layout="rd-navbar-static"
+            data-xxl-device-layout="rd-navbar-static" data-xxxl-device-layout="rd-navbar-static"
+            data-stick-up-offset="1px" data-sm-stick-up-offset="1px" data-md-stick-up-offset="1px"
+            data-lg-stick-up-offset="1px" data-xl-stick-up-offset="1px" data-xxl-stick-up-offset="1px"
+            data-xxx-lstick-up-offset="1px" data-stick-up="true">
+            <div class="rd-navbar-inner" style="background-color: #901313;margin: 0px; padding: 0px; fill: #901313;">
+                <div class="rd-navbar-panel"> <button class="rd-navbar-toggle"
+                        data-rd-navbar-toggle=".rd-navbar-nav-wrap"><span></span></button>
+                    <div class="rd-navbar-brand"> <a class="brand-name" href="/"
+                            style="padding-left: 10px; padding-right: 10px;"><img class="logo-default zoom"
+                                src="{% static 'main/images/logo.png' %}" alt="" height="28px"><img
+                                class="logo-inverse zoom" src="{% static 'main/images/logo.png' %}"
+                                alt="" height="28px"></a>
+                    </div>
+                </div>
+                <div class="rd-navbar-aside-right">
+                    <div class="rd-navbar-collapse-toggle fa fa-search" data-rd-navbar-toggle=".rd-navbar-collapse">
+                        <span></span>
+                    </div>
+                    <div class="rd-navbar-nav-wrap">
+                        <ul class="rd-navbar-nav">
+                            <li class="rd-nav-item"><a class="rd-nav-link" href="/movies"
+                                    style="color: white; text-decoration: none;">Movies</a>
+                            </li>
+                            <li class="rd-nav-item"><a class="rd-nav-link" href="/tvseries"
+                                    style="color: white; text-decoration: none;">TV Shows</a>
+                            </li>
+                            <li class="rd-nav-item"><a class="rd-nav-link" href="/most-watched"
+                                style="color: white; text-decoration: none;">Most Watched</a>
+                        </li>
+                        <li class="rd-nav-item"><a class="rd-nav-link" href="/comingsoon"
+                                style="color: white; text-decoration: none;">Coming Soon</a>
+                        </li>
+                            <li class="rd-nav-item"><a class="rd-nav-link" style="color: white; text-decoration: none;"
+                                    href="/allgenre">Genres</a>
+                                <ul class="rd-menu rd-navbar-dropdown">
+                                    <li class="rd-dropdown-item">{% for item in genres %}<a href="/allgenre#{{item}}"
+                                            class="genredropdownhover"
+                                            style="text-decoration: none; background-color: transparent; color: white;">
+                                            {{item}}
+                                        </a>{% endfor %}</li>
+                                </ul>
+                            </li>
+
+
+                        </ul>
+                    </div>
+                    <div class="rd-navbar-aside-right-inner rd-navbar-collapse"
+                        style="margin-right: 10px; margin-left: 40px;">
+                        <ul class="rd-navbar-nav" style="padding-left: 10px;">
+
+
+                            <li class="rd-nav-item">
+                                <form method="post">
+                                    {% csrf_token %}
+                                    <input type="search" name="search" placeholder=" Search..."
+                                        class="search-box" value="{{search}}">
+                                    <button type="submit"
+                                        class="search-box-button"><i
+                                            class="fa fa-search"
+                                            style="color: white;"></i></button>
+                                </form>
+                            </li>
+
+
+                        </ul>
+
+
+                    </div>
+                </div>
+            </div>
+    </div>
+    </div>
+    </nav>
+    </div>
+    <div class="page">
+        <div>
+            {% block content %}
+
+            {% endblock %}
+        </div>
+        <footer>
+             <div class="row">
+                <div class="column-footer">
+                    Movie Freaks is a website that brings to you the best Movies and TV Shows for free in English, Albanian and French.
+                </div>
+                 <div class="column-footer" style="margin-top: 5px; top: 50%;">
+                     <button class="dropbtn-modal" data-toggle="modal" data-target="#myModalSuggestions"
+                                    style="color: white; text-decoration: none; cursor: pointer; background-color: #141414;">Make a suggestion <span
+                                        class="fa fa-commenting"></span></button>
+                 </div>
+                 <div class="column-footer" style="margin-top: 10px;">
+                    Copyright © 2021 Movie Freaks, Inc.
+                </div>
+                <div class="column-footer" style="margin-top: 10px;">
+                     <span class="fa fa-facebook"></span><span class="fa fa-instagram"></span><span class="fa fa-youtube"></span><span class="fa fa-twitter"></span>
+                </div>
+             </div>
+        </footer>
+    </div>
+    <div class="modal fade" id="myModalSuggestions" role="dialog">
+
+        <form class="modal-dialog modal-lg" method="post">
+            {% csrf_token %}
+            <div class="modal-content" style="background-color: white;">
+            <div class="imgcontainer">
+                <h1 style="color: red; text-align: center;">Movie/TV Show Suggestion!</h1>
+                <p style="color: red; text-align: center;">Make a Movie/TV show suggestion that it's not
+                    on our website, and based on this request we will bring it to you.</p>
+                <span data-dismiss="modal" class="close"
+                    title="Close">&times;</span>
+            </div>
+
+
+            <div class="container-fluid">
+                <input class="container-fluid textareastyle" type="text" name="emri" placeholder="Name and Last Name"
+                    required minlength="4" style="height: 50px;">
+                <input class="container-fluid textareastyle" type="text" name="titulli"
+                    placeholder="Movie/TV Show title" required minlength="4" style="height: 50px;">
+                <textarea class="container-fluid textareastyle" name="name" placeholder="Movie/TV Show description"
+                    rows="5" cols="60" required minlength="10"></textarea><br>
+
+            </div>
+
+            <div class="container-fluid" style="background-color:#f1f1f1; text-align: center;">
+                <button type="button" data-dismiss="modal" style="margin-right: 5px;"
+                    class="cancelbtn button1">Cancel
+                </button>
+                <input type="submit" name="suggestion" value="Send" class="cancelbtn button1">
+            </div>
+        </div>
+        </form>
+    </div>
+    </div>
+
+
+
+    <script>
+        $('.modal-dropdown button').on('click', function () {
+            $(this).toggleClass('arrow-down');
+            if (!$(this).parent().find('.modal-dropdown-section a').hasClass('open_filter')) {
+                $('.open_filter').removeClass('open_filter');
+                $(this).parent().find('.modal-dropdown-section a').addClass('open_filter');
+            } else {
+                $('.open_filter').removeClass('open_filter');
+            }
+        });
+
+        $(document).on('click', function (e) {
+            var $target = $(e.target),
+                $ul = $target.closest('.modal-dropdown').find('.modal-dropdown-section a');
+
+            if (typeof $ul === "undefined" || !$ul.hasClass('open_filter')) {
+                $(this).removeClass('arrow-down');
+                $('.open_filter').removeClass('open_filter');
+            }
+        });
+    </script>
+    <script src="https://code.jquery.com/jquery-3.5.1.min.js"></script>
+    <script>
+        $(document).ready(function () { {% for item in tvseriepopup %} $(".selectid{{item.id}}").change(function () { $(this).find("option:selected").each(function () {var optionValue = $(this).attr("value"); if (optionValue) { $(".seasonid{{item.id}}").not("." + optionValue).hide(); $("." + optionValue).show(); } else { $(".seasonid{{item.id}}").hide(); }}); }).change(); 
+        {% endfor %} });
+    </script>
+
+    <script src="{% static 'main/styles/js/core.min.js' %}"></script>
+    <script src="{% static 'main/styles/js/jvscript2.js' %}"></script>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+        integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+        crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+        integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+        crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+        integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+        crossorigin="anonymous"></script>
+</body>
+
+
+</html>
+{% endspaceless %}
